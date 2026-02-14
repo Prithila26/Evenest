@@ -1,0 +1,392 @@
+{% load static %}
+{% load cart_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EventNest - Event Management Platform{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=4">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-enhanced">
+        <div class="container">
+            <div class="navbar-wrapper">
+                <!-- Logo/Brand -->
+                <a href="{% url 'home' %}" class="navbar-brand" style="text-decoration: none;">
+                    <span style="font-size: 1.5rem; font-weight: 700; -webkit-text-fill-color: initial;"><span style="color: #3B82F6; -webkit-text-fill-color: #3B82F6;">Event</span><span style="color: #10B981; -webkit-text-fill-color: #10B981;">Nest</span></span>
+                </a>
+                
+                <!-- Search Bar (Desktop) -->
+                <div class="navbar-search">
+                    <form method="GET" action="{% url 'search' %}" class="search-form">
+                        <div class="search-input-group">
+                            <i class="bi bi-search"></i>
+                            <input type="text" placeholder="Search..." class="search-input" name="q">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Navigation Menu -->
+                <ul class="navbar-menu">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link">
+                            <i class="bi bi-house-door"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown-item-nav">
+                        <a href="{% url 'all_services' %}" class="nav-link">
+                            <i class="bi bi-briefcase"></i> Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'all_store_items' %}" class="nav-link">
+                            <i class="bi bi-shop"></i> Store
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contact' %}" class="nav-link">
+                            <i class="bi bi-chat-dots"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Right Actions -->
+                <div class="navbar-actions">
+                    <!-- Cart -->
+                    <a href="{% url 'cart' %}" class="nav-action" title="Shopping Cart">
+                        <i class="bi bi-bag-fill"></i>
+                        {% if cart_count > 0 %}<span class="cart-count" id="cart-count">{{ cart_count }}</span>{% endif %}
+                    </a>
+
+                    <!-- Notifications -->
+                    {% if request.user.is_authenticated %}
+                    <div class="notification-dropdown">
+                        <a href="#" class="nav-action notification-btn" title="Notifications" id="notification-btn">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="notification-count" id="notification-count" style="display: none;">0</span>
+                        </a>
+                        <div class="notification-menu" id="notification-menu">
+                            <div class="notification-header">
+                                <h4>Notifications</h4>
+                                <button type="button" class="btn-link" id="mark-all-read">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">Loading...</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="{% url 'notifications' %}">View All Notifications</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="#" class="nav-action" title="Notifications">
+                        <i class="bi bi-bell-fill"></i>
+                    </a>
+                    {% endif %}
+
+                    <!-- User Menu -->
+                    {% if request.user.is_authenticated %}
+                        <div class="user-menu">
+                            <button class="user-profile-btn" id="user-dropdown-btn">
+                                <div class="user-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <span class="user-name">{{ request.user.first_name|default:request.user.username }}</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-user">
+                                <div class="dropdown-header">
+                                    <div class="user-info">
+                                        <i class="bi bi-person-circle"></i>
+                                        <div>
+                                            <p class="user-full-name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                            <p class="user-email">{{ request.user.email }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <a href="{% url 'profile' %}" class="dropdown-item">
+                                    <i class="bi bi-person"></i> My Profile
+                                </a>
+                                <a href="{% url 'wishlist' %}" class="dropdown-item">
+                                    <i class="bi bi-heart"></i> My Wishlist
+                                </a>
+                                <a href="{% url 'my_bookings' %}" class="dropdown-item">
+                                    <i class="bi bi-calendar-check"></i> My Bookings
+                                </a>
+                                <a href="{% url 'order_history' %}" class="dropdown-item">
+                                    <i class="bi bi-receipt"></i> Order History
+                                </a>
+                                {% if request.user.is_staff %}
+                                    <hr>
+                                    <a href="/admin/" class="dropdown-item" target="_blank">
+                                        <i class="bi bi-gear"></i> Admin Panel
+                                    </a>
+                                {% endif %}
+                                <hr>
+                                <form method="post" action="{% url 'logout' %}" id="logout-form" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item logout-item" style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container" style="margin-top: var(--spacing-lg);">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+                    <i class="bi bi-info-circle"></i> {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-brand"><span style="color: #3B82F6;">Event</span><span style="color: #10B981;">Nest</span></h4>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Your complete event management platform for creating unforgettable experiences across Bangladesh.</p>
+                    <p style="color: var(--text-tertiary); font-size: 0.9rem;">
+                        <i class="bi bi-geo-alt"></i> Banani, Dhaka 1213<br>
+                        <i class="bi bi-telephone"></i> +880 1712-345678
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'all_services' %}">Our Services</a></li>
+                        <li><a href="{% url 'all_store_items' %}">Store</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link" title="Twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-link" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    &copy; 2025 EventNest Bangladesh. All rights reserved. | Designed with <i class="bi bi-heart-fill" style="color: #ff6b6b;"></i> in Dhaka
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // User dropdown toggle
+        const userDropdownBtn = document.getElementById('user-dropdown-btn');
+        const dropdownMenu = document.querySelector('.dropdown-menu-user');
+        
+        if (userDropdownBtn) {
+            userDropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                // Close notification menu if open
+                const notificationMenu = document.getElementById('notification-menu');
+                if (notificationMenu) notificationMenu.classList.remove('show');
+            });
+            
+            document.addEventListener('click', function() {
+                dropdownMenu.classList.remove('show');
+            });
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navbarMenu.classList.toggle('mobile-visible');
+            });
+        }
+        
+        // Notification System
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationMenu = document.getElementById('notification-menu');
+        const notificationList = document.getElementById('notification-list');
+        const notificationCount = document.getElementById('notification-count');
+        const markAllReadBtn = document.getElementById('mark-all-read');
+        
+        if (notificationBtn) {
+            // Toggle notification menu
+            notificationBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                notificationMenu.classList.toggle('show');
+                // Close user dropdown if open
+                if (dropdownMenu) dropdownMenu.classList.remove('show');
+                
+                // Fetch notifications when opened
+                if (notificationMenu.classList.contains('show')) {
+                    fetchNotifications();
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!notificationMenu.contains(e.target) && e.target !== notificationBtn) {
+                    notificationMenu.classList.remove('show');
+                }
+            });
+            
+            // Initial fetch to get count
+            fetchNotificationCount();
+            
+            // Poll for new notifications every 60 seconds
+            setInterval(fetchNotificationCount, 60000);
+        }
+        
+        function fetchNotificationCount() {
+            fetch('/api/notifications/')
+                .then(response => response.json())
+                .then(data => {
+                    if (notificationCount) {
+                        notificationCount.textContent = data.unread_count;
+                        notificationCount.style.display = data.unread_count > 0 ? 'flex' : 'none';
+                    }
+                })
+                .catch(error => console.log('Error fetching notifications:', error));
+        }
+        
+        function fetchNotifications() {
+            notificationList.innerHTML = '<div class="notification-loading">Loading...</div>';
+            
+            fetch('/api/notifications/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.notifications.length === 0) {
+                        notificationList.innerHTML = '<div class="notification-empty"><i class="bi bi-bell-slash"></i><p>No notifications yet</p></div>';
+                    } else {
+                        notificationList.innerHTML = data.notifications.map(n => `
+                            <div class="notification-item ${n.is_read ? '' : 'unread'}" data-id="${n.id}" onclick="handleNotificationClick(${n.id}, '${n.link}')">
+                                <div class="notification-icon">
+                                    <i class="bi ${getNotificationIcon(n.type)}"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>${n.title}</h5>
+                                    <p>${n.message}</p>
+                                    <span class="notification-time">${n.created_at}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                    
+                    if (notificationCount) {
+                        notificationCount.textContent = data.unread_count;
+                        notificationCount.style.display = data.unread_count > 0 ? 'flex' : 'none';
+                    }
+                })
+                .catch(error => {
+                    notificationList.innerHTML = '<div class="notification-error">Error loading notifications</div>';
+                });
+        }
+        
+        function getNotificationIcon(type) {
+            const icons = {
+                'booking': 'bi-calendar-check',
+                'order': 'bi-bag-check',
+                'promo': 'bi-gift',
+                'system': 'bi-gear',
+                'welcome': 'bi-hand-wave'
+            };
+            return icons[type] || 'bi-bell';
+        }
+        
+        function handleNotificationClick(id, link) {
+            // Mark as read
+            fetch(`/api/notifications/${id}/read/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                fetchNotificationCount();
+                if (link) {
+                    window.location.href = link;
+                }
+            });
+        }
+        
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', function() {
+                fetch('/api/notifications/read-all/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                }).then(() => {
+                    fetchNotifications();
+                });
+            });
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Thank You - EvenNest{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="success-card">
+                    <!-- Success Icon -->
+                    <div class="success-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+
+                    <!-- Success Message -->
+                    <h1 class="success-title">Message Sent Successfully!</h1>
+                    
+                    <p class="success-subtitle">
+                        Thank you for reaching out to us. We've received your inquiry and will get back to you as soon as possible.
+                    </p>
+
+                    <!-- Details -->
+                    <div class="success-details">
+                        <div class="detail-item">
+                            <i class="bi bi-clock-history"></i>
+                            <span>We typically respond within 24 hours</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-envelope-check"></i>
+                            <span>Check your email for our response</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-telephone"></i>
+                            <span>We may also contact you via phone if provided</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="success-actions">
+                        <a href="{% url 'home' %}" class="btn btn-success-primary">
+                            <i class="bi bi-house"></i> Back to Home
+                        </a>
+                        <a href="{% url 'all_services' %}" class="btn btn-success-secondary">
+                            <i class="bi bi-search"></i> Browse Services
+                        </a>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="success-footer">
+                        <p class="text-muted">
+                            Have questions in the meantime? Visit our <a href="#">FAQ page</a> or <a href="#">knowledge base</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .success-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+    }
+
+    .success-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+        text-align: center;
+        animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .success-icon {
+        margin-bottom: 1.5rem;
+    }
+
+    .success-icon i {
+        font-size: 4rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: bounceIn 0.8s ease-out;
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .success-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .success-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .success-details {
+        background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: #555;
+        font-weight: 500;
+    }
+
+    .detail-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .detail-item i {
+        font-size: 1.3rem;
+        color: #667eea;
+        min-width: 30px;
+    }
+
+    .success-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .btn-success-primary,
+    .btn-success-secondary {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .btn-success-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-success-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-success-secondary {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+    }
+
+    .btn-success-secondary:hover {
+        background: #667eea;
+        color: white;
+    }
+
+    .success-footer {
+        padding-top: 2rem;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .success-footer a {
+        color: #667eea;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .success-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .success-card {
+            padding: 1.5rem;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+        }
+
+        .success-actions {
+            flex-direction: column;
+        }
+
+        .btn-success-primary,
+        .btn-success-secondary {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

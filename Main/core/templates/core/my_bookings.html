@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 style="margin-bottom: var(--spacing-2xl);">My Bookings</h1>
+
+        {% if bookings %}
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-xl);">
+            {% for booking in bookings %}
+            <div class="card" style="overflow: hidden;">
+                <!-- Booking Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--spacing-lg); border-bottom: 2px solid var(--bg-tertiary); margin-bottom: var(--spacing-lg);">
+                    <div>
+                        <h3 style="margin-bottom: var(--spacing-sm); font-size: 1.5rem;">Booking #{{ booking.id }}</h3>
+                        <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-xs);">
+                            <i class="bi bi-calendar3"></i> {{ booking.date|date:"F d, Y" }} at {{ booking.time_slot|time:"g:i A" }}
+                        </p>
+                        <p style="color: var(--text-tertiary); font-size: 0.9rem;">
+                            <i class="bi bi-clock-history"></i> Booked {{ booking.created_at|date:"M d, Y" }}
+                        </p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-xs); font-size: 0.9rem;">Total Amount</p>
+                        <p style="font-weight: 700; font-size: 1.8rem; color: var(--primary); margin-bottom: var(--spacing-md);">৳{{ booking.total_amount|floatformat:0 }}</p>
+                    </div>
+                </div>
+
+                <!-- Status Timeline -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h4 style="margin-bottom: var(--spacing-sm); color: var(--text-secondary);">Booking Status</h4>
+                    <!-- Timeline visualization -->
+                    <div style="display: flex; gap: 0; align-items: center; margin: var(--spacing-lg) 0;">
+                        <!-- Pending -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if booking.status == 'pending' or booking.status == 'confirmed' or booking.status == 'completed' %}background-color: #7C3AED;{% elif booking.status == 'cancelled' %}background-color: #EF4444;{% else %}background-color: #D1D5DB;{% endif %}">
+                                <i class="bi bi-clipboard-check" style="font-size: 1.2rem;"></i>
+                            </div>
+                            <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if booking.status == 'pending' or booking.status == 'confirmed' or booking.status == 'completed' %}var(--primary){% elif booking.status == 'cancelled' %}#EF4444{% else %}var(--text-tertiary){% endif %};">Pending</p>
+                        </div>
+                        <!-- Connector 1 -->
+                        <div style="flex: 0.5; height: 3px; background-color: {% if booking.status == 'confirmed' or booking.status == 'completed' %}#7C3AED{% elif booking.status == 'cancelled' %}#EF4444{% else %}#D1D5DB{% endif %};"></div>
+                        
+                        <!-- Confirmed -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if booking.status == 'confirmed' or booking.status == 'completed' %}background-color: #7C3AED;{% elif booking.status == 'cancelled' %}background-color: #EF4444;{% else %}background-color: #D1D5DB;{% endif %}">
+                                <i class="bi bi-check-circle" style="font-size: 1.2rem;"></i>
+                            </div>
+                            <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if booking.status == 'confirmed' or booking.status == 'completed' %}var(--primary){% elif booking.status == 'cancelled' %}#EF4444{% else %}var(--text-tertiary){% endif %};">Confirmed</p>
+                        </div>
+                        <!-- Connector 2 -->
+                        <div style="flex: 0.5; height: 3px; background-color: {% if booking.status == 'completed' %}#10B981{% elif booking.status == 'cancelled' %}#EF4444{% else %}#D1D5DB{% endif %};"></div>
+                        
+                        <!-- Completed -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if booking.status == 'completed' %}background-color: #10B981;{% elif booking.status == 'cancelled' %}background-color: #EF4444;{% else %}background-color: #D1D5DB;{% endif %}">
+                                {% if booking.status == 'cancelled' %}
+                                <i class="bi bi-x-lg" style="font-size: 1.2rem;"></i>
+                                {% else %}
+                                <i class="bi bi-check2-all" style="font-size: 1.2rem;"></i>
+                                {% endif %}
+                            </div>
+                            <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if booking.status == 'completed' %}#10B981{% elif booking.status == 'cancelled' %}#EF4444{% else %}var(--text-tertiary){% endif %};">{% if booking.status == 'cancelled' %}Cancelled{% else %}Completed{% endif %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Status Badge -->
+                    <div style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: var(--spacing-lg);">
+                        <div style="padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-lg); {% if booking.status == 'completed' %}background-color: #ECFDF5; border-left: 4px solid #10B981;{% elif booking.status == 'confirmed' %}background-color: #EFF6FF; border-left: 4px solid #3B82F6;{% elif booking.status == 'pending' %}background-color: #FEF3C7; border-left: 4px solid #FCD34D;{% else %}background-color: #FEE2E2; border-left: 4px solid #EF4444;{% endif %}">
+                            <span style="font-weight: 600; {% if booking.status == 'completed' %}color: #047857;{% elif booking.status == 'confirmed' %}color: #1E40AF;{% elif booking.status == 'pending' %}color: #78350F;{% else %}color: #7F1D1D;{% endif %}">
+                                <i class="bi {% if booking.status == 'completed' %}bi-check-circle{% elif booking.status == 'confirmed' %}bi-check-lg{% elif booking.status == 'pending' %}bi-clock{% else %}bi-x-circle{% endif %}" style="margin-right: var(--spacing-sm);"></i>
+                                {{ booking.get_status_display|upper }}
+                            </span>
+                        </div>
+                        {% if booking.status == 'completed' %}
+                        <span style="font-size: 0.85rem; color: #10B981; font-weight: 600;">✓ Service Completed</span>
+                        {% elif booking.status == 'confirmed' %}
+                        <span style="font-size: 0.85rem; color: #3B82F6; font-weight: 600;">📅 Booking confirmed</span>
+                        {% elif booking.status == 'pending' %}
+                        <span style="font-size: 0.85rem; color: #F59E0B; font-weight: 600;">⏳ Awaiting confirmation</span>
+                        {% else %}
+                        <span style="font-size: 0.85rem; color: #EF4444; font-weight: 600;">✗ Booking cancelled</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Service Booked -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h4 style="margin-bottom: var(--spacing-lg); color: var(--text-secondary);">Service Booked</h4>
+                    {% with service=booking.get_service %}
+                    <div style="display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--bg-tertiary);">
+                        {% if service and service.image %}
+                        <img src="{{ service.image.url }}" alt="{{ service.title }}" style="width: 100px; height: 100px; border-radius: var(--radius-lg); object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        {% else %}
+                        <div style="width: 100px; height: 100px; border-radius: var(--radius-lg); background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-calendar-event" style="font-size: 2rem; color: var(--text-tertiary);"></i>
+                        </div>
+                        {% endif %}
+                        <div style="flex: 1;">
+                            <h5 style="margin-bottom: var(--spacing-xs);">{% if service %}{{ service.title }}{% else %}{{ booking.get_service_type_display }}{% endif %}</h5>
+                            <p style="color: var(--primary); font-size: 0.85rem; margin-bottom: var(--spacing-sm);">
+                                <i class="bi bi-tag"></i> {{ booking.get_service_type_display }}
+                            </p>
+                            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-sm); font-size: 0.9rem;">
+                                <i class="bi bi-calendar-date"></i> Date: <strong>{{ booking.date|date:"F d, Y" }}</strong>
+                            </p>
+                            <p style="color: var(--text-tertiary); font-size: 0.9rem;">
+                                <i class="bi bi-clock"></i> Time: <strong>{{ booking.time_slot|time:"g:i A" }}</strong>
+                            </p>
+                            {% if booking.requirements %}
+                            <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: var(--spacing-sm);">
+                                <i class="bi bi-card-text"></i> Notes: {{ booking.requirements|truncatewords:15 }}
+                            </p>
+                            {% endif %}
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-weight: 600; color: var(--primary); font-size: 1.1rem;">৳{{ booking.total_amount|floatformat:0 }}</p>
+                            <p style="color: var(--text-tertiary); font-size: 0.85rem;">Total</p>
+                        </div>
+                    </div>
+                    {% endwith %}
+                </div>
+
+                <!-- Booking Actions -->
+                <div style="display: flex; gap: var(--spacing-md); padding-top: var(--spacing-lg); border-top: 2px solid var(--bg-tertiary);">
+                    {% if booking.status == 'pending' or booking.status == 'confirmed' %}
+                    <a href="{% url 'modify_booking' booking.id %}" class="btn btn-primary" style="flex: 1; text-align: center;">
+                        <i class="bi bi-pencil"></i> Modify
+                    </a>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-outline-primary" style="flex: 1; text-align: center; border-color: #EF4444; color: #EF4444;" onclick="return confirm('Are you sure you want to cancel this booking?');">
+                        <i class="bi bi-x-lg"></i> Cancel
+                    </a>
+                    {% else %}
+                    <a href="{% url 'all_services' %}" class="btn btn-primary" style="flex: 1; text-align: center;">
+                        <i class="bi bi-calendar-plus"></i> Book Again
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'contact' %}" class="btn btn-ghost" style="text-align: center;">
+                        <i class="bi bi-chat-dots"></i> Support
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="empty-state">
+                <i class="bi bi-calendar-x" style="font-size: 4rem; margin-bottom: var(--spacing-lg); color: var(--text-tertiary);"></i>
+                <h3>No bookings yet</h3>
+                <p style="margin-bottom: var(--spacing-xl); color: var(--text-tertiary);">Start booking services to see them here!</p>
+                <a href="{% url 'all_services' %}" class="btn btn-primary">
+                    <i class="bi bi-calendar-plus"></i> Browse Services
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

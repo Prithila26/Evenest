@@ -1,0 +1,30 @@
+{
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput --clear",
+  "installCommand": "pip install -r requirements.txt",
+  "framework": "django",
+  "python": {
+    "version": "3.11"
+  },
+  "env": {
+    "PYTHONUNBUFFERED": "1"
+  },
+  "functions": {
+    "myproject/wsgi.py": {
+      "memory": 3008,
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "myproject/wsgi.py"
+    }
+  ]
+}

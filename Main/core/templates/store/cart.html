@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}Shopping Cart - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 style="margin-bottom: var(--spacing-2xl);">Shopping Cart</h1>
+
+        {% if cart_items %}
+        <div class="grid" style="grid-template-columns: 1fr 350px; gap: var(--spacing-2xl);">
+            <!-- Cart Items -->
+            <div>
+                <div class="card">
+                    {% for cart_item in cart_items %}
+                    <div style="display: flex; gap: var(--spacing-lg); padding: var(--spacing-lg); border-bottom: 1px solid var(--bg-tertiary); align-items: start;">
+                        {% if cart_item.item.image %}
+                        <img src="{{ cart_item.item.image|smart_image_url }}" alt="{{ cart_item.item.name }}" style="width: 120px; height: 120px; border-radius: var(--radius-lg); object-fit: cover;">
+                        {% endif %}
+                        <div style="flex: 1;">
+                            <h4 style="margin-bottom: var(--spacing-sm);">{{ cart_item.item.name }}</h4>
+                            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-md);">{{ cart_item.item.category.name }}</p>
+                            
+                            <form method="post" action="{% url 'update_cart' cart_item.id %}" style="margin-bottom: var(--spacing-md);">
+                                {% csrf_token %}
+                                <div class="flex" style="gap: var(--spacing-sm); align-items: center;">
+                                    <label style="font-weight: 600; color: var(--text-secondary);">Qty:</label>
+                                    <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="{{ cart_item.item.stock }}" style="width: 70px; padding: 8px 12px; border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary); font-weight: 600; font-size: 1rem; text-align: center;">
+                                    <button type="submit" class="btn btn-small btn-ghost" style="padding: 8px 16px; font-weight: 600;">Update</button>
+                                </div>
+                            </form>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <p style="font-weight: 600; font-size: 1.1rem; color: var(--primary);">
+                                    ৳{{ cart_item.get_total|floatformat:0 }}
+                                </p>
+                                <a href="{% url 'remove_from_cart' cart_item.id %}" class="btn btn-small" style="color: var(--error); background: rgba(239, 68, 68, 0.1);">
+                                    <i class="bi bi-trash"></i> Remove
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div>
+                <div class="card">
+                    <h4 style="margin-bottom: var(--spacing-lg);">Order Summary</h4>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-md);">
+                        <p>Subtotal</p>
+                        <p style="font-weight: 600;">৳{{ total|floatformat:0 }}</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-md);">
+                        <p>Shipping</p>
+                        <p style="font-weight: 600;">Free</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-top: var(--spacing-lg); border-top: 1px solid var(--bg-tertiary); margin-bottom: var(--spacing-xl);">
+                        <p style="font-weight: 600; font-size: 1.1rem;">Total</p>
+                        <p style="font-weight: 600; font-size: 1.1rem; color: var(--primary);">৳{{ total|floatformat:0 }}</p>
+                    </div>
+
+                    <a href="{% url 'checkout' %}" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="bi bi-credit-card"></i> Proceed to Checkout
+                    </a>
+                    <a href="{% url 'all_store_items' %}" class="btn btn-ghost" style="width: 100%; justify-content: center; margin-top: var(--spacing-md);">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="empty-state">
+                <i class="bi bi-bag" style="font-size: 4rem; margin-bottom: var(--spacing-lg);"></i>
+                <h3>Your cart is empty</h3>
+                <p style="margin-bottom: var(--spacing-xl);">Start adding items to get started!</p>
+                <a href="{% url 'all_store_items' %}" class="btn btn-primary">
+                    <i class="bi bi-shop"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}Order History - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 style="margin-bottom: var(--spacing-2xl);">Order History</h1>
+
+        {% if orders %}
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-xl);">
+            {% for order in orders %}
+            <div class="card" style="overflow: hidden;">
+                <!-- Order Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--spacing-lg); border-bottom: 2px solid var(--bg-tertiary); margin-bottom: var(--spacing-lg);">
+                    <div>
+                        <h3 style="margin-bottom: var(--spacing-sm); font-size: 1.5rem;">Order #{{ order.id }}</h3>
+                        <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-xs);">
+                            <i class="bi bi-calendar3"></i> {{ order.created_at|date:"F d, Y \a\t g:i A" }}
+                        </p>
+                        <p style="color: var(--text-tertiary); font-size: 0.9rem;">
+                            <i class="bi bi-clock-history"></i> Updated {{ order.updated_at|date:"M d, Y" }}
+                        </p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-xs); font-size: 0.9rem;">Total Amount</p>
+                        <p style="font-weight: 700; font-size: 1.8rem; color: var(--primary); margin-bottom: var(--spacing-md);">৳{{ order.total_amount|floatformat:0 }}</p>
+                    </div>
+                </div>
+
+                <!-- Status Timeline -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                        <div style="flex: 1;">
+                            <h4 style="margin-bottom: var(--spacing-sm); color: var(--text-secondary);">Order Status</h4>
+                            <!-- Timeline visualization -->
+                            <div style="display: flex; gap: 0; align-items: center; margin: var(--spacing-lg) 0;">
+                                <!-- Pending -->
+                                <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if order.status == 'pending' or order.status in 'processing,shipped,delivered' %}background-color: #7C3AED;{% else %}background-color: #D1D5DB;{% endif %} transition: all 0.3s ease;">
+                                        <i class="bi bi-clipboard-check" style="font-size: 1.2rem;"></i>
+                                    </div>
+                                    <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if order.status == 'pending' or order.status in 'processing,shipped,delivered' %}var(--primary){% else %}var(--text-tertiary){% endif %};">Pending</p>
+                                </div>
+                                <!-- Connector 1 -->
+                                <div style="flex: 0.5; height: 3px; background-color: {% if order.status in 'processing,shipped,delivered' %}#7C3AED{% else %}#D1D5DB{% endif %}; transition: background-color 0.3s ease;"></div>
+                                
+                                <!-- Processing -->
+                                <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if order.status == 'processing' or order.status in 'shipped,delivered' %}background-color: #7C3AED;{% else %}background-color: #D1D5DB;{% endif %} transition: all 0.3s ease;">
+                                        <i class="bi bi-hourglass-split" style="font-size: 1.2rem;"></i>
+                                    </div>
+                                    <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if order.status == 'processing' or order.status in 'shipped,delivered' %}var(--primary){% else %}var(--text-tertiary){% endif %};">Processing</p>
+                                </div>
+                                <!-- Connector 2 -->
+                                <div style="flex: 0.5; height: 3px; background-color: {% if order.status in 'shipped,delivered' %}#7C3AED{% else %}#D1D5DB{% endif %}; transition: background-color 0.3s ease;"></div>
+                                
+                                <!-- Shipped -->
+                                <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if order.status == 'shipped' or order.status == 'delivered' %}background-color: #7C3AED;{% else %}background-color: #D1D5DB;{% endif %} transition: all 0.3s ease;">
+                                        <i class="bi bi-truck" style="font-size: 1.2rem;"></i>
+                                    </div>
+                                    <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if order.status == 'shipped' or order.status == 'delivered' %}var(--primary){% else %}var(--text-tertiary){% endif %};">Shipped</p>
+                                </div>
+                                <!-- Connector 3 -->
+                                <div style="flex: 0.5; height: 3px; background-color: {% if order.status == 'delivered' %}#7C3AED{% else %}#D1D5DB{% endif %}; transition: background-color 0.3s ease;"></div>
+                                
+                                <!-- Delivered -->
+                                <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; margin-bottom: var(--spacing-sm); {% if order.status == 'delivered' %}background-color: #10B981;{% else %}background-color: #D1D5DB;{% endif %} transition: all 0.3s ease;">
+                                        <i class="bi bi-check-circle" style="font-size: 1.2rem;"></i>
+                                    </div>
+                                    <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: {% if order.status == 'delivered' %}#10B981{% else %}var(--text-tertiary){% endif %};">Delivered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Badge & Alert -->
+                    <div style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: var(--spacing-lg);">
+                        <div style="padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-lg); {% if order.status == 'delivered' %}background-color: #ECFDF5; border-left: 4px solid #10B981;{% elif order.status == 'shipped' %}background-color: #EFF6FF; border-left: 4px solid #3B82F6;{% elif order.status == 'processing' %}background-color: #FFFBEB; border-left: 4px solid #F59E0B;{% elif order.status == 'pending' %}background-color: #FEF3C7; border-left: 4px solid #FCD34D;{% else %}background-color: #FEE2E2; border-left: 4px solid #EF4444;{% endif %}">
+                            <span style="font-weight: 600; {% if order.status == 'delivered' %}color: #047857;{% elif order.status == 'shipped' %}color: #1E40AF;{% elif order.status == 'processing' %}color: #92400E;{% elif order.status == 'pending' %}color: #78350F;{% else %}color: #7F1D1D;{% endif %}">
+                                <i class="bi {% if order.status == 'delivered' %}bi-check-circle{% elif order.status == 'shipped' %}bi-box-seam{% elif order.status == 'processing' %}bi-gear{% elif order.status == 'pending' %}bi-clock{% else %}bi-x-circle{% endif %}" style="margin-right: var(--spacing-sm);"></i>
+                                {{ order.get_status_display|upper }}
+                            </span>
+                        </div>
+                        {% if order.status == 'delivered' %}
+                        <span style="font-size: 0.85rem; color: #10B981; font-weight: 600;">✓ Successfully Delivered</span>
+                        {% elif order.status == 'shipped' %}
+                        <span style="font-size: 0.85rem; color: #3B82F6; font-weight: 600;">📦 On the way to you</span>
+                        {% elif order.status == 'processing' %}
+                        <span style="font-size: 0.85rem; color: #F59E0B; font-weight: 600;">⚙️ Being prepared</span>
+                        {% elif order.status == 'pending' %}
+                        <span style="font-size: 0.85rem; color: #F59E0B; font-weight: 600;">⏳ Awaiting confirmation</span>
+                        {% else %}
+                        <span style="font-size: 0.85rem; color: #EF4444; font-weight: 600;">✗ Order cancelled</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h4 style="margin-bottom: var(--spacing-lg); color: var(--text-secondary);">Items Ordered</h4>
+                    {% for item in order.order_items.all %}
+                    <div style="display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--bg-tertiary);">
+                        {% if item.item.image %}
+                        <img src="{{ item.item.image|smart_image_url }}" alt="{{ item.item.name }}" style="width: 100px; height: 100px; border-radius: var(--radius-lg); object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        {% endif %}
+                        <div style="flex: 1;">
+                            <h5 style="margin-bottom: var(--spacing-xs);">{{ item.item.name }}</h5>
+                            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-sm); font-size: 0.9rem;">
+                                <i class="bi bi-box"></i> Quantity: <strong>{{ item.quantity }}</strong>
+                            </p>
+                            <p style="color: var(--text-tertiary); font-size: 0.9rem;">
+                                <i class="bi bi-tag"></i> Unit Price: <strong>৳{{ item.price|floatformat:0 }}</strong>
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-weight: 600; color: var(--primary); font-size: 1.1rem;">৳{{ item.get_total|floatformat:0 }}</p>
+                            <p style="color: var(--text-tertiary); font-size: 0.85rem;">Subtotal</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Order Actions -->
+                <div style="display: flex; gap: var(--spacing-md); padding-top: var(--spacing-lg); border-top: 2px solid var(--bg-tertiary);">
+                    <a href="{% url 'download_invoice' order.id %}" class="btn btn-primary" style="flex: 1; text-align: center;">
+                        <i class="bi bi-file-pdf"></i> Download Invoice
+                    </a>
+                    <button onclick="reorderItems({{ order.id }})" class="btn btn-outline-primary" style="flex: 1;">
+                        <i class="bi bi-arrow-repeat"></i> Reorder
+                    </button>
+                    <a href="{% url 'contact' %}" class="btn btn-ghost">
+                        <i class="bi bi-chat-dots"></i> Support
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="empty-state">
+                <i class="bi bi-receipt" style="font-size: 4rem; margin-bottom: var(--spacing-lg); color: var(--text-tertiary);"></i>
+                <h3>No orders yet</h3>
+                <p style="margin-bottom: var(--spacing-xl); color: var(--text-tertiary);">Start shopping to see your orders here!</p>
+                <a href="{% url 'all_store_items' %}" class="btn btn-primary">
+                    <i class="bi bi-shop"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, rgba(124, 58, 237, 0.05) 100%);
+        min-height: calc(100vh - 200px);
+    }
+
+    .card {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--bg-tertiary);
+        padding: var(--spacing-xl);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(124, 58, 237, 0.15);
+    }
+
+    .btn {
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-radius: var(--radius-md);
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .btn-primary {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #6D28D9;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-outline-primary {
+        background-color: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: rgba(124, 58, 237, 0.1);
+    }
+
+    .btn-ghost {
+        background-color: transparent;
+        color: var(--text-secondary);
+        border: 1px solid var(--bg-tertiary);
+    }
+
+    .btn-ghost:hover {
+        background-color: var(--bg-tertiary);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+</style>
+
+<script>
+    function reorderItems(orderId) {
+        // Show loading message
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Adding to cart...';
+        btn.disabled = true;
+
+        // Fetch order items
+        fetch(`/api/order/${orderId}/items/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Add each item to cart
+                    const addToCartPromises = data.items.map(item => 
+                        fetch(`/cart/add/${item.id}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value || getCookie('csrftoken'),
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ quantity: item.quantity })
+                        })
+                    );
+
+                    return Promise.all(addToCartPromises);
+                } else {
+                    throw new Error(data.error || 'Failed to reorder items');
+                }
+            })
+            .then(() => {
+                // Show success message
+                btn.innerHTML = '<i class="bi bi-check-circle"></i> Added to cart!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    // Optionally redirect to cart
+                    window.location.href = '/cart/';
+                }, 1500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Error adding items to cart. Please try again.');
+            });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h1>Get In Touch</h1>
+            <p class="section-subtitle">Have a question? We're here to help! Reach out to us anytime.</p>
+        </div>
+
+        <div class="grid grid-2">
+            <!-- Contact Form -->
+            <div class="card">
+                <h3 style="margin-bottom: var(--spacing-lg);">Send us a Message</h3>
+
+                <form method="post" style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="full_name" value="{{ request.user.first_name }}" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ request.user.email }}" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" name="subject" placeholder="How can we help?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" rows="6" placeholder="Tell us more about your inquiry..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="bi bi-send"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <div class="card">
+                    <h3 style="margin-bottom: var(--spacing-2xl);">Contact Information</h3>
+
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <h5 style="color: var(--primary); margin-bottom: var(--spacing-md);">
+                            <i class="bi bi-geo-alt"></i> Address
+                        </h5>
+                        <p>House 42, Road 11, Block D<br>Banani, Dhaka 1213<br>Bangladesh</p>
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <h5 style="color: var(--primary); margin-bottom: var(--spacing-md);">
+                            <i class="bi bi-telephone"></i> Phone
+                        </h5>
+                        <p><a href="tel:+8801712345678" style="text-decoration: none;">+880 1712-345678</a></p>
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <h5 style="color: var(--primary); margin-bottom: var(--spacing-md);">
+                            <i class="bi bi-envelope"></i> Email
+                        </h5>
+                        <p><a href="mailto:info@eventnest.com.bd" style="text-decoration: none;">info@eventnest.com.bd</a></p>
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <h5 style="color: var(--primary); margin-bottom: var(--spacing-md);">
+                            <i class="bi bi-clock"></i> Business Hours
+                        </h5>
+                        <p>Saturday - Thursday: 10:00 AM - 7:00 PM<br>Friday: Closed</p>
+                    </div>
+
+                    <div style="padding-top: var(--spacing-lg); border-top: 1px solid var(--bg-tertiary);">
+                        <h5 style="color: var(--primary); margin-bottom: var(--spacing-md);">Follow Us</h5>
+                        <div class="flex" style="gap: var(--spacing-md);">
+                            <a href="#"><i class="bi bi-facebook" style="font-size: 1.5rem;"></i></a>
+                            <a href="#"><i class="bi bi-twitter" style="font-size: 1.5rem;"></i></a>
+                            <a href="#"><i class="bi bi-instagram" style="font-size: 1.5rem;"></i></a>
+                            <a href="#"><i class="bi bi-linkedin" style="font-size: 1.5rem;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

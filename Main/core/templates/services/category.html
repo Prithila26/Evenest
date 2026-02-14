@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - Services{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">{{ category.name }}</h1>
+    {% if category.description %}
+    <p class="lead mb-4">{{ category.description }}</p>
+    {% endif %}
+
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if service.image %}
+                <a href="{% url 'service_detail' service.id %}" class="card-img-link">
+                    <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}" style="height: 250px; object-fit: cover;" loading="lazy" decoding="async">
+                </a>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                        <a href="{% url 'service_detail' service.id %}" class="text-decoration-none text-dark">{{ service.title }}</a>
+                    </h5>
+                    <p class="card-text flex-grow-1">{{ service.description|truncatewords:15 }}</p>
+                    <div class="mt-3">
+                        <p class="card-text">
+                            <strong class="text-primary h4">৳{{ service.price }}</strong>
+                        </p>
+                        <a href="{% url 'service_detail' service.id %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .card-img-link {
+        overflow: hidden;
+        display: block;
+    }
+    
+    .card-img-link img {
+        transition: transform 0.3s ease;
+    }
+    
+    .card-img-link:hover img {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

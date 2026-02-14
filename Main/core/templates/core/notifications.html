@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-2xl);">
+            <div>
+                <h1><i class="bi bi-bell"></i> Notifications</h1>
+                <p style="color: var(--text-secondary);">Stay updated with your bookings, orders, and more</p>
+            </div>
+            {% if notifications %}
+            <form method="post" action="{% url 'mark_all_notifications_read' %}" id="mark-all-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-ghost">
+                    <i class="bi bi-check-all"></i> Mark All as Read
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if notifications %}
+        <div class="notifications-page-list">
+            {% for notification in notifications %}
+            <div class="notification-page-item {% if not notification.is_read %}unread{% endif %}">
+                <div class="notification-page-icon notification-type-{{ notification.notification_type }}">
+                    {% if notification.notification_type == 'booking' %}
+                        <i class="bi bi-calendar-check"></i>
+                    {% elif notification.notification_type == 'order' %}
+                        <i class="bi bi-bag-check"></i>
+                    {% elif notification.notification_type == 'promo' %}
+                        <i class="bi bi-gift"></i>
+                    {% elif notification.notification_type == 'welcome' %}
+                        <i class="bi bi-hand-wave"></i>
+                    {% else %}
+                        <i class="bi bi-bell"></i>
+                    {% endif %}
+                </div>
+                <div class="notification-page-content">
+                    <h4>{{ notification.title }}</h4>
+                    <p>{{ notification.message }}</p>
+                    <span class="notification-page-time">
+                        <i class="bi bi-clock"></i> {{ notification.created_at|date:"d M Y, h:i A" }}
+                    </span>
+                </div>
+                {% if notification.link %}
+                <a href="{{ notification.link }}" class="btn btn-sm btn-ghost">
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state" style="text-align: center; padding: var(--spacing-4xl);">
+            <i class="bi bi-bell-slash" style="font-size: 4rem; color: var(--text-muted); margin-bottom: var(--spacing-lg);"></i>
+            <h3 style="margin-bottom: var(--spacing-md);">No Notifications Yet</h3>
+            <p style="color: var(--text-secondary);">When you have bookings, orders, or updates, they'll appear here.</p>
+            <a href="{% url 'all_services' %}" class="btn btn-primary" style="margin-top: var(--spacing-lg);">
+                <i class="bi bi-briefcase"></i> Browse Services
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+.notifications-page-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.notification-page-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--bg-tertiary);
+    transition: all var(--transition-fast);
+}
+
+.notification-page-item:hover {
+    border-color: var(--primary);
+    transform: translateX(4px);
+}
+
+.notification-page-item.unread {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    border-left: 4px solid var(--primary);
+}
+
+.notification-page-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.notification-type-booking {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.notification-type-order {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--primary);
+}
+
+.notification-type-promo {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.notification-type-welcome {
+    background: rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+}
+
+.notification-type-system {
+    background: rgba(107, 114, 128, 0.2);
+    color: #6b7280;
+}
+
+.notification-page-content {
+    flex: 1;
+}
+
+.notification-page-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.notification-page-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.notification-page-time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+</style>
+
+<script>
+document.getElementById('mark-all-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('{% url "mark_all_notifications_read" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    }).then(() => {
+        location.reload();
+    });
+});
+</script>
+{% endblock %}

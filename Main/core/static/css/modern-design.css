@@ -1,0 +1,846 @@
+/* ============================================
+   MODERN DESIGN SYSTEM - ENHANCEMENTS
+   Colorful, Professional UI with Gradients
+   ============================================ */
+
+:root {
+    /* Extended Color Palette - Vibrant & Professional */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-danger: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --gradient-info: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    --gradient-warm: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    
+    /* Micro-animation Timing */
+    --micro-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --micro-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --micro-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   HERO SECTIONS - Gradient Backgrounds
+   ============================================ */
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 5rem 0;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"></path></svg>');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+}
+
+.hero-section .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   CARDS - Soft Shadows & Rounded Corners
+   ============================================ */
+
+.card {
+    border: none;
+    border-radius: 16px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all var(--micro-base);
+    transform: translateY(0);
+}
+
+.card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+}
+
+.card-body {
+    padding: 1.75rem;
+}
+
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--micro-base);
+}
+
+.card:hover .card-img-wrapper img {
+    transform: scale(1.08);
+}
+
+/* Price Badge on Cards */
+.card-price {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* ============================================
+   BUTTONS - Modern Styles & Hover States
+   ============================================ */
+
+.btn {
+    position: relative;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    transition: all var(--micro-base);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width var(--micro-base), height var(--micro-base);
+    z-index: 0;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn span, .btn i {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
+}
+
+.btn-success {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.35);
+}
+
+.btn-danger {
+    background: var(--gradient-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(250, 112, 154, 0.35);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--gradient-primary);
+    color: #667eea;
+    transition: all var(--micro-base);
+}
+
+.btn-outline:hover {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Small & Large Button Variants */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   FORM ELEMENTS - Modern Styling
+   ============================================ */
+
+.form-control,
+.form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all var(--micro-base);
+    background: white;
+    font-family: inherit;
+}
+
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    background-color: rgba(102, 126, 234, 0.02);
+}
+
+.form-control::placeholder {
+    color: #bbb;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   BADGES & TAGS - Colorful Variants
+   ============================================ */
+
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    animation: slideIn var(--micro-base);
+}
+
+.badge-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.badge-success {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.badge-danger {
+    background: var(--gradient-danger);
+    color: white;
+}
+
+.badge-info {
+    background: var(--gradient-info);
+    color: #333;
+}
+
+.badge-warm {
+    background: var(--gradient-warm);
+    color: white;
+}
+
+/* ============================================
+   ALERTS & NOTIFICATIONS - Toast Style
+   ============================================ */
+
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    animation: slideInRight var(--micro-base);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1060;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.alert-success {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.alert-danger {
+    background: var(--gradient-danger);
+    color: white;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: white;
+}
+
+.alert-info {
+    background: var(--gradient-info);
+    color: #333;
+}
+
+.alert .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: opacity var(--micro-base);
+}
+
+.alert .btn-close:hover {
+    opacity: 1;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   LINKS & TEXT - Smooth Interactions
+   ============================================ */
+
+a {
+    color: #667eea;
+    text-decoration: none;
+    transition: all var(--micro-base);
+    position: relative;
+}
+
+a:hover {
+    color: #764ba2;
+    text-decoration: none;
+}
+
+a.link-underline {
+    position: relative;
+    padding-bottom: 2px;
+}
+
+a.link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transition: width var(--micro-base);
+}
+
+a.link-underline:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   SCROLLBAR - Custom Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: all var(--micro-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .alert {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        min-width: auto;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.shadow-soft {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-medium {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-hard {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.rounded-xl {
+    border-radius: 16px;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.transition-all {
+    transition: all var(--micro-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.hover-grow:hover {
+    transform: scale(1.05);
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+.fade-in {
+    animation: slideIn var(--micro-base);
+}
+
+.fade-in-delay {
+    animation: slideIn var(--micro-base);
+    animation-delay: 0.1s;
+}
+
+/* ============================================
+   ACCESSIBLE COLOR CONTRAST
+   ============================================ */
+
+.text-on-primary {
+    color: white;
+    font-weight: 500;
+}
+
+.text-on-secondary {
+    color: white;
+    font-weight: 500;
+}
+
+.text-muted-light {
+    color: #999;
+}
+
+.text-muted-dark {
+    color: #666;
+}
+
+/* ============================================
+   LANDSCAPE & PORTRAIT - Mobile Optimizations
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .hero-section {
+        padding: 2rem 0;
+        min-height: 250px;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   MODERN ANIMATED BACKGROUNDS
+   ============================================ */
+
+:root {
+    --bg-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-gradient-secondary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --bg-gradient-tertiary: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --bg-gradient-warm: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Animated gradient background for body */
+body {
+    background: linear-gradient(
+        -45deg,
+        #667eea,
+        #764ba2,
+        #4facfe,
+        #00f2fe
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(250, 112, 154, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    animation: floatingShapes 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+/* Main content area with semi-transparent white overlay */
+main {
+    position: relative;
+    z-index: 1;
+}
+
+main .container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem !important;
+}
+
+/* Gradient animations */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes floatingShapes {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.5;
+    }
+    25% {
+        transform: translate(30px, -50px);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-60px, 30px);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translate(40px, 60px);
+        opacity: 0.6;
+    }
+}
+
+/* Alternative background styles (can be toggled) */
+.bg-animated-gradient-primary {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #4facfe, #764ba2);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.bg-animated-gradient-cool {
+    background: linear-gradient(-45deg, #4facfe, #00f2fe, #667eea, #00f2fe);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.bg-animated-gradient-warm {
+    background: linear-gradient(-45deg, #fa709a, #fee140, #f093fb, #fee140);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.bg-animated-gradient-vibrant {
+    background: linear-gradient(-45deg, #667eea, #fa709a, #fee140, #4facfe);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* Mesh gradient background (modern design) */
+.bg-mesh-gradient {
+    background: 
+        radial-gradient(at 20% 50%, rgba(102, 126, 234, 0.8) 0px, transparent 50px),
+        radial-gradient(at 80% 80%, rgba(79, 172, 254, 0.8) 0px, transparent 50px),
+        radial-gradient(at 40% 80%, rgba(250, 112, 154, 0.8) 0px, transparent 50px),
+        radial-gradient(at 90% 10%, rgba(240, 147, 251, 0.8) 0px, transparent 50px);
+    background-size: 100% 100%;
+    animation: meshShift 20s ease-in-out infinite;
+}
+
+@keyframes meshShift {
+    0%, 100% {
+        background-position: 0% 0%;
+    }
+    33% {
+        background-position: 100% 100%;
+    }
+    66% {
+        background-position: -100% 100%;
+    }
+}
+
+/* Glassmorphism effect for cards on animated background */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Animated background pattern overlay */
+.bg-pattern-overlay {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-pattern-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.03) 10px,
+            rgba(255, 255, 255, 0.03) 20px
+        );
+    pointer-events: none;
+    animation: patternSlide 20s linear infinite;
+}
+
+@keyframes patternSlide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(20px);
+    }
+}
+
+/* ============================================
+   CART BADGE - ANIMATED GRADIENT
+   ============================================ */
+
+.cart-badge-animated {
+    background: linear-gradient(
+        135deg,
+        #fa709a 0%,
+        #fee140 25%,
+        #4facfe 50%,
+        #fa709a 75%,
+        #fee140 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+    color: white !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    transition: all var(--micro-base);
+}
+
+.cart-badge-animated:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 6px 25px rgba(250, 112, 154, 0.6);
+}
+
+/* Gradient Animation Keyframes */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Pulse Animation for New Items */
+.cart-badge-animated.pulse {
+    animation: gradientShift 4s ease infinite, pulse 0.6s ease-in-out 3;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+}
+

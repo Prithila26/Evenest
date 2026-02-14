@@ -1,0 +1,366 @@
+{% load static %}
+{% load cart_tags %}
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid pe-4 ps-4">
+        <!-- Animated Brand -->
+        <a class="navbar-brand" href="{% url 'home' %}" style="text-decoration: none;">
+            <span style="font-size: 1.5rem; font-weight: 700;"><span style="color: #3B82F6;">Event</span><span style="color: #10B981;">Nest</span></span>
+        </a>
+
+        <!-- Toggler Button -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Items -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Main Navigation Menu -->
+            <ul class="navbar-nav ms-auto">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                        href="{% url 'home' %}">
+                        <i class="bi bi-house"></i> Home
+                    </a>
+                </li>
+
+                <!-- Services Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-sparkles"></i> Services
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        {% for category in service_categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'all_services' %}?category={{ category.id }}">
+                                <i class="bi bi-star"></i> {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <!-- Store Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="storeDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-shop"></i> Store
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                        {% for category in store_categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'all_store_items' %}?category={{ category.id }}">
+                                <i class="bi bi-bag"></i> {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <!-- Booking -->
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'booking_list' %}active{% endif %}" 
+                        href="{% url 'booking_list' %}">
+                        <i class="bi bi-calendar-check"></i> Bookings
+                    </a>
+                </li>
+
+                <li class="nav-item d-lg-none">
+                    <hr class="dropdown-divider my-2">
+                </li>
+
+                <!-- Wishlist Button (Mobile) -->
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" href="{% url 'wishlist' %}">
+                        <i class="bi bi-heart"></i> Wishlist
+                    </a>
+                </li>
+
+                <!-- Cart Button (Mobile) -->
+                {% if user.is_authenticated %}
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link position-relative" href="{% url 'cart_detail' %}" title="Shopping Cart">
+                        <i class="bi bi-cart3"></i> Cart
+                        <span class="badge badge-danger cart-count-badge">{{ cart_count }}</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <!-- Account Dropdown (Mobile) -->
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown d-lg-none">
+                    <a class="nav-link dropdown-toggle" href="#" id="accountDropdownMobile" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="accountDropdownMobile">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'profile' %}">
+                                <i class="bi bi-person"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'booking_list' %}">
+                                <i class="bi bi-calendar-check"></i> My Bookings
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'order_history' %}">
+                                <i class="bi bi-clock-history"></i> Orders
+                            </a>
+                        </li>
+                        {% if user.is_staff %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                <i class="bi bi-gear"></i> Admin
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}" class="d-inline w-100">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-danger w-100 text-start">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" href="{% url 'login' %}">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <!-- Right Side Actions -->
+            <div class="d-flex align-items-center gap-2 ms-3">
+                <!-- Search Form (Desktop) -->
+                <form class="search-form d-none d-lg-flex" action="{% url 'search' %}" method="GET">
+                    <div class="input-group">
+                        <input type="search" 
+                               name="q" 
+                               class="form-control" 
+                               placeholder="Search products & services..."
+                               aria-label="Search">
+                        <button class="btn btn-search" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                {% if user.is_authenticated %}
+                <!-- Wishlist Button (Desktop) -->
+                <a href="{% url 'wishlist' %}" class="btn btn-outline-light d-none d-lg-inline-flex">
+                    <i class="bi bi-heart"></i>
+                    <span class="d-none d-xl-inline ms-1">Wishlist</span>
+                </a>
+
+                <!-- Cart Button (Desktop) -->
+                <a href="{% url 'cart_detail' %}" class="cart-btn d-none d-lg-inline-flex position-relative" title="Shopping Cart">
+                    <i class="bi bi-cart3"></i>
+                    <span class="badge badge-danger cart-count-badge">{{ cart_count }}</span>
+                </a>
+
+                <!-- Account Menu (Desktop) -->
+                <div class="nav-item dropdown d-none d-lg-inline-flex">
+                    <button class="account-toggle dropdown-toggle" type="button" id="accountDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                        <span class="ms-2">{{ user.username|truncatechars:15 }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'profile' %}">
+                                <i class="bi bi-person"></i> My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'booking_list' %}">
+                                <i class="bi bi-calendar-check"></i> My Bookings
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'order_history' %}">
+                                <i class="bi bi-clock-history"></i> Order History
+                            </a>
+                        </li>
+                        {% if user.is_staff %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                <i class="bi bi-gear"></i> Admin Panel
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}" class="d-inline w-100">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-danger w-100 text-start">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                <!-- Auth Buttons (Desktop) -->
+                <a href="{% url 'login' %}" class="btn btn-outline-light d-none d-lg-inline-flex">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span class="ms-1">Login</span>
+                </a>
+                <a href="{% url 'signup' %}" class="btn btn-light d-none d-lg-inline-flex">
+                    <i class="bi bi-person-plus"></i>
+                    <span class="ms-1">Sign Up</span>
+                </a>
+                {% endif %}
+
+                <!-- Mobile Search Toggle -->
+                <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#mobileSearch" aria-expanded="false">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Form -->
+    <div class="collapse" id="mobileSearch">
+        <div class="container-fluid p-3">
+            <form action="{% url 'search' %}" method="GET">
+                <div class="input-group">
+                    <input type="search" 
+                           name="q" 
+                           class="form-control" 
+                           placeholder="Search..."
+                           aria-label="Search">
+                    <button class="btn btn-search" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Cart Button Styling */
+    .cart-btn {
+        position: relative;
+        color: rgba(255, 255, 255, 0.95) !important;
+        padding: 0.6rem 1rem !important;
+        border-radius: 20px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        text-decoration: none !important;
+    }
+
+    .cart-btn:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: rgba(255, 255, 255, 0.6) !important;
+        transform: translateY(-2px);
+    }
+
+    /* Cart Count Badge - Notification Style */
+    .cart-count-badge {
+        position: absolute !important;
+        top: -8px !important;
+        right: -8px !important;
+        min-width: 22px !important;
+        height: 22px !important;
+        font-size: 0.75rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        z-index: 1000 !important;
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4) !important;
+        border: 2px solid white !important;
+    }
+
+    .cart-btn:hover .cart-count-badge {
+        transform: scale(1.2) !important;
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.6) !important;
+    }
+
+    .nav-link .cart-count-badge {
+        margin-left: 0.3rem !important;
+        position: relative !important;
+        top: -8px !important;
+        right: auto !important;
+    }
+
+    @keyframes cartBadgePulse {
+        0%, 100% { 
+            transform: scale(1);
+        }
+        50% { 
+            transform: scale(1.15);
+        }
+    }
+
+    /* Account toggle button styling */
+    .account-toggle {
+        color: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid rgba(255, 255, 255, 0.4) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        font-weight: 600 !important;
+        padding: 0.6rem 1.2rem !important;
+        border-radius: 20px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+
+    .account-toggle:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.8) !important;
+        color: #fff !important;
+        transform: translateY(-2px);
+    }
+
+    .account-toggle::after {
+        border: none !important;
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        border-radius: 50%;
+        margin-left: 0.5rem;
+        transition: all 0.3s ease !important;
+    }
+
+    /* Mobile search form styling */
+    #mobileSearch {
+        background: rgba(102, 126, 234, 0.9);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #mobileSearch .form-control {
+        background: rgba(255, 255, 255, 0.95);
+        border: none;
+        border-radius: 20px;
+        padding: 0.75rem 1.5rem;
+    }
+
+    #mobileSearch .btn-search {
+        background: var(--primary-gradient);
+    }
+</style>

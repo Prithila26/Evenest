@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Provider - EvenNest{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <!-- Hero Section -->
+    <div class="contact-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Get in Touch</h1>
+            <p class="hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+    </div>
+
+    <!-- Contact Form Section -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-card">
+                    <!-- Service Info (if provided) -->
+                    {% if service_name %}
+                    <div class="service-info-banner">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Inquiry about: <strong>{{ service_name }}</strong></span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Contact Form -->
+                    <form method="post" class="contact-form" id="contactForm" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Name Field -->
+                        <div class="form-group">
+                            {{ form.full_name.label_tag }}
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="form-error">
+                                    {{ form.full_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="form-error">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div class="form-group">
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="form-error">
+                                    {{ form.phone.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Subject Field -->
+                        <div class="form-group">
+                            {{ form.subject.label_tag }}
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="form-error">
+                                    {{ form.subject.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Message Field -->
+                        <div class="form-group">
+                            {{ form.message.label_tag }}
+                            {{ form.message }}
+                            <small class="char-count">
+                                <span id="charCount">0</span>/500 characters
+                            </small>
+                            {% if form.message.errors %}
+                                <div class="form-error">
+                                    {{ form.message.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Preferred Contact Method -->
+                        <div class="form-group">
+                            {{ form.preferred_contact_method.label_tag }}
+                            {{ form.preferred_contact_method }}
+                            {% if form.preferred_contact_method.errors %}
+                                <div class="form-error">
+                                    {{ form.preferred_contact_method.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Service Type -->
+                        <div class="form-group">
+                            {{ form.service_type.label_tag }}
+                            {{ form.service_type }}
+                            {% if form.service_type.errors %}
+                                <div class="form-error">
+                                    {{ form.service_type.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-contact-submit">
+                                <i class="bi bi-send"></i> Send Message
+                            </button>
+                            <a href="javascript:history.back()" class="btn btn-contact-cancel">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+
+                        <!-- Form Status Messages -->
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger mt-3">
+                                {{ form.non_field_errors.0 }}
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+
+                <!-- Info Boxes -->
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-3">
+                        <div class="info-box">
+                            <div class="info-icon email">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <h5>Email Us</h5>
+                            <p class="text-muted">info@evenest.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-box">
+                            <div class="info-icon phone">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <h5>Call Us</h5>
+                            <p class="text-muted">+880 1XXX-XXX-XXX</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-box">
+                            <div class="info-icon whatsapp">
+                                <i class="bi bi-whatsapp"></i>
+                            </div>
+                            <h5>WhatsApp</h5>
+                            <p class="text-muted">Chat with us</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Contact Page Styles */
+    .contact-container {
+        position: relative;
+    }
+
+    .contact-hero {
+        position: relative;
+        height: 300px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 3rem;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+        opacity: 0.5;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        font-weight: 300;
+    }
+
+    .contact-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .service-info-banner {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        border-left: 4px solid #667eea;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    .service-info-banner i {
+        font-size: 1.3rem;
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background-color: rgba(102, 126, 234, 0.02);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .char-count {
+        font-size: 0.85rem;
+        color: #999;
+        margin-top: 0.5rem;
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-error::before {
+        content: '⚠';
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-contact-submit,
+    .btn-contact-cancel {
+        flex: 1;
+        padding: 0.9rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-contact-submit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-contact-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-contact-submit:active {
+        transform: translateY(0);
+    }
+
+    .btn-contact-cancel {
+        background: #f0f0f0;
+        color: #666;
+        text-decoration: none;
+    }
+
+    .btn-contact-cancel:hover {
+        background: #e0e0e0;
+        color: #333;
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+        padding: 2rem 1.5rem;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid rgba(102, 126, 234, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .info-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+        border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .info-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+    }
+
+    .info-icon.email {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .info-icon.phone {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+
+    .info-icon.whatsapp {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+    }
+
+    .info-box h5 {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .info-box p {
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .contact-card {
+            padding: 1.5rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-contact-submit,
+        .btn-contact-cancel {
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    // Character counter for message field
+    const messageField = document.querySelector('textarea[name="message"]');
+    const charCount = document.querySelector('#charCount');
+    
+    if (messageField) {
+        messageField.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+        // Set initial count
+        charCount.textContent = messageField.value.length;
+    }
+
+    // Form validation on submit
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        const fullName = document.querySelector('input[name="full_name"]');
+        const email = document.querySelector('input[name="email"]');
+        const subject = document.querySelector('input[name="subject"]');
+        const message = document.querySelector('textarea[name="message"]');
+
+        if (!fullName.value.trim()) {
+            e.preventDefault();
+            fullName.focus();
+            fullName.classList.add('is-invalid');
+            alert('Please enter your full name');
+            return;
+        }
+
+        if (!email.value.trim()) {
+            e.preventDefault();
+            email.focus();
+            email.classList.add('is-invalid');
+            alert('Please enter your email address');
+            return;
+        }
+
+        if (!subject.value.trim()) {
+            e.preventDefault();
+            subject.focus();
+            subject.classList.add('is-invalid');
+            alert('Please enter a subject');
+            return;
+        }
+
+        if (!message.value.trim()) {
+            e.preventDefault();
+            message.focus();
+            message.classList.add('is-invalid');
+            alert('Please enter your message');
+            return;
+        }
+    });
+</script>
+{% endblock %}

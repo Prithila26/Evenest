@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}{{ item.name }} - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="flex" style="gap: var(--spacing-2xl); margin-bottom: var(--spacing-3xl);">
+            <!-- Image -->
+            <div style="flex: 1; min-width: 0;">
+                {% if item.image %}
+                <img src="{{ item.image|smart_image_url }}" alt="{{ item.name }}" style="width: 100%; border-radius: var(--radius-xl); object-fit: cover; height: 400px;">
+                {% else %}
+                <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; color: white;">
+                    <div style="text-align: center;">
+                        <i class="bi bi-image" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
+                        <p>{{ item.name }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Details -->
+            <div style="flex: 1;">
+                <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-md);">
+                    <i class="bi bi-tag"></i> {{ item.category.name }}
+                </p>
+                <h1>{{ item.name }}</h1>
+                
+                <div style="margin: var(--spacing-xl) 0;">
+                    <div style="font-size: 2.5rem; color: var(--primary); font-weight: 700; margin-bottom: var(--spacing-md);">
+                        ৳{{ item.price|floatformat:0 }}
+                    </div>
+                    <div class="flex" style="gap: var(--spacing-md); align-items: center;">
+                        <div class="flex" style="gap: var(--spacing-xs);">
+                            {% for i in "12345" %}
+                            <i class="bi bi-star-fill" style="color: var(--warning);"></i>
+                            {% endfor %}
+                        </div>
+                        <p style="color: var(--text-tertiary);">(95 reviews)</p>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-secondary); padding: var(--spacing-lg); border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);">
+                    <div class="flex" style="gap: var(--spacing-md); align-items: center;">
+                        <div>
+                            {% if item.stock > 0 %}
+                            <p style="color: var(--success); font-weight: 600;">
+                                <i class="bi bi-check-circle-fill"></i> In Stock
+                            </p>
+                            <p style="font-size: 0.9rem; color: var(--text-tertiary);">Only {{ item.stock }} left!</p>
+                            {% else %}
+                            <p style="color: var(--error); font-weight: 600;">
+                                <i class="bi bi-x-circle-fill"></i> Out of Stock
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'add_to_cart' item.id %}" style="display: flex; gap: var(--spacing-md);">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1" max="{{ item.stock }}" style="width: 100px;">
+                    <button type="submit" class="btn btn-primary" {% if item.stock == 0 %}disabled{% endif %} style="flex: 1;">
+                        <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                </form>
+                
+                {% if user.is_authenticated %}
+                <div style="margin-top: var(--spacing-md);">
+                    {% if item in wishlist_items %}
+                    <a href="{% url 'remove_from_wishlist' item.id %}" class="btn btn-secondary" style="width: 100%;">
+                        <i class="bi bi-heart-fill" style="color: var(--error);"></i> Remove from Wishlist
+                    </a>
+                    {% else %}
+                    <a href="{% url 'add_to_wishlist' 'storeitem' item.id %}" class="btn btn-secondary" style="width: 100%;">
+                        <i class="bi bi-heart"></i> Add to Wishlist
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="card">
+            <h3>Product Details</h3>
+            <p>{{ item.description }}</p>
+            
+            <h4 style="margin-top: var(--spacing-xl); margin-bottom: var(--spacing-md);">Features</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-md);">
+                <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-md);"></i>High-quality materials</li>
+                <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-md);"></i>Durable and long-lasting</li>
+                <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-md);"></i>Free shipping on orders over ৳5,000</li>
+                <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-md);"></i>30-day money-back guarantee</li>
+            </ul>
+        </div>
+
+        <!-- Shipping Info -->
+        <div class="card" style="margin-top: var(--spacing-2xl);">
+            <h3>Shipping & Returns</h3>
+            <div class="grid grid-2">
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-truck"></i> Free Shipping
+                    </h5>
+                    <p>On orders over ৳5,000. Standard delivery 3-5 business days within Bangladesh.</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-arrow-repeat"></i> Easy Returns
+                    </h5>
+                    <p>30-day return policy. No questions asked.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

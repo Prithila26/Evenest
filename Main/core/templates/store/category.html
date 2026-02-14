@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}{{ category.name }} - EventNest Store{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 style="margin-bottom: var(--spacing-md);">{{ category.name }}</h1>
+        {% if category.description %}
+        <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-2xl);">{{ category.description }}</p>
+        {% endif %}
+
+        <div class="grid grid-3">
+            {% for item in items %}
+            <div class="product-card" style="position: relative;">
+                {% if user.is_authenticated %}
+                <a href="{% if item in wishlist_items %}{% url 'remove_from_wishlist' item.id %}{% else %}{% url 'add_to_wishlist' 'storeitem' item.id %}{% endif %}" 
+                   class="wishlist-btn" 
+                   style="position: absolute; top: 10px; right: 10px; z-index: 10; background: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s;"
+                   title="{% if item in wishlist_items %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                    <i class="bi bi-heart{% if item in wishlist_items %}-fill{% endif %}" style="color: {% if item in wishlist_items %}var(--error){% else %}var(--text-tertiary){% endif %}; font-size: 1.1rem;"></i>
+                </a>
+                {% endif %}
+                <div class="card-image-container">
+                    {% if item.image %}
+                    <a href="{% url 'store_item_detail' item.id %}">
+                        <img src="{{ item.image|smart_image_url }}" alt="{{ item.name }}">
+                    </a>
+                    {% else %}
+                    <div style="width: 100%; height: 250px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                        <i class="bi bi-image" style="font-size: 3rem;"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="{% url 'store_item_detail' item.id %}" style="color: inherit; text-decoration: none;">{{ item.name }}</a>
+                    </h3>
+                    <p class="card-description">{{ item.description|truncatewords:15 }}</p>
+                    <div class="flex" style="gap: var(--spacing-sm); color: var(--success); font-size: 0.9rem; margin: var(--spacing-md) 0;">
+                        {% if item.stock > 0 %}
+                            <i class="bi bi-check-circle"></i>
+                            <span>{{ item.stock }} in stock</span>
+                        {% else %}
+                            <i class="bi bi-exclamation-circle" style="color: var(--warning);"></i>
+                            <span>Out of stock</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-price">৳{{ item.price|floatformat:0 }}</div>
+                        <a href="{% url 'store_item_detail' item.id %}" class="btn btn-primary btn-small">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state" style="grid-column: 1 / -1;">
+                <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                <p>No items available in this category.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

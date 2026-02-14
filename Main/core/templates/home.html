@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}Home - EventNest{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Discover, Create & Manage Events Effortlessly</h1>
+            <p>Your complete platform for event management, professional services, and premium merchandise.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'all_services' %}" class="btn btn-primary">
+                    <i class="bi bi-sparkles"></i> Explore Services
+                </a>
+                <a href="{% url 'all_store_items' %}" class="btn btn-secondary">
+                    <i class="bi bi-shop"></i> Browse Store
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Services Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Premium Services</h2>
+            <p class="section-subtitle">Professional event services tailored to your needs</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="service-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&h=350&fit=crop" alt="Event Planning">
+                </div>
+                <div class="card-body">
+                    <div class="card-badge">Popular</div>
+                    <h3 class="card-title">Event Planning</h3>
+                    <p class="card-description">Complete event coordination and management from planning to execution.</p>
+                    <a href="{% url 'all_services' %}?category=1" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        View Services
+                    </a>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=500&h=350&fit=crop" alt="Photography">
+                </div>
+                <div class="card-body">
+                    <div class="card-badge">Professional</div>
+                    <h3 class="card-title">Photography</h3>
+                    <p class="card-description">Professional photographers capturing your special moments.</p>
+                    <a href="{% url 'all_services' %}?category=2" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        View Services
+                    </a>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=500&h=350&fit=crop" alt="Catering">
+                </div>
+                <div class="card-body">
+                    <div class="card-badge">Delicious</div>
+                    <h3 class="card-title">Catering</h3>
+                    <p class="card-description">Gourmet catering services for events of all sizes.</p>
+                    <a href="{% url 'all_services' %}?category=3" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        View Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="section" style="background: rgba(99, 102, 241, 0.05);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+            <p class="section-subtitle">Curated merchandise and event packages</p>
+        </div>
+        
+        {% if featured_items %}
+        <div class="grid grid-3">
+            {% for item in featured_items %}
+            <div class="product-card">
+                <div class="card-image-container">
+                    <img src="{{ item.image|smart_image_url }}" alt="{{ item.name }}">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ item.name }}</h3>
+                    <p class="card-description">{{ item.description|truncatewords:15 }}</p>
+                    <div class="card-footer">
+                        <div class="card-price">৳{{ item.price|floatformat:0 }}</div>
+                        <a href="{% url 'store_item_detail' item.id %}" class="btn btn-primary btn-small">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>No products available at the moment.</p>
+        </div>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: var(--spacing-3xl);">
+            <a href="{% url 'all_store_items' %}" class="btn btn-primary">
+                <i class="bi bi-arrow-right"></i> Explore Full Store
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose EventNest Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why Choose EventNest?</h2>
+            <p class="section-subtitle">Everything you need for a successful event</p>
+        </div>
+        
+        <div class="grid grid-4">
+            <div class="card">
+                <div style="text-align: center; padding: var(--spacing-xl) 0;">
+                    <div style="font-size: 3rem; color: var(--primary); margin-bottom: var(--spacing-md);">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4 style="margin-bottom: var(--spacing-md);">100% Verified</h4>
+                    <p>All service providers and products are verified for quality.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="text-align: center; padding: var(--spacing-xl) 0;">
+                    <div style="font-size: 3rem; color: var(--accent-blue); margin-bottom: var(--spacing-md);">
+                        <i class="bi bi-lightning-fill"></i>
+                    </div>
+                    <h4 style="margin-bottom: var(--spacing-md);">Fast & Easy</h4>
+                    <p>Quick booking and seamless checkout process.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="text-align: center; padding: var(--spacing-xl) 0;">
+                    <div style="font-size: 3rem; color: var(--accent-teal); margin-bottom: var(--spacing-md);">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h4 style="margin-bottom: var(--spacing-md);">24/7 Support</h4>
+                    <p>Our dedicated support team is always ready to help.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="text-align: center; padding: var(--spacing-xl) 0;">
+                    <div style="font-size: 3rem; color: var(--accent-pink); margin-bottom: var(--spacing-md);">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <h4 style="margin-bottom: var(--spacing-md);">Best Quality</h4>
+                    <p>Premium services and products for exceptional events.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+    <div class="container" style="text-align: center;">
+        <h2 style="color: white; margin-bottom: var(--spacing-xl);">Ready to Create Your Perfect Event?</h2>
+        <p style="color: rgba(255,255,255,0.9); margin-bottom: var(--spacing-2xl); font-size: 1.1rem;">
+            Join thousands of customers who have made their events unforgettable with EventNest.
+        </p>
+        <a href="{% url 'all_services' %}" class="btn btn-secondary">
+            Start Planning Today
+        </a>
+    </div>
+</section>
+{% endblock %}

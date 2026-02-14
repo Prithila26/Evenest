@@ -1,0 +1,750 @@
+[
+  {
+    "model": "core.servicecategory",
+    "pk": 1,
+    "fields": {
+      "name": "Event Management",
+      "description": "Professional event planning and coordination services"
+    }
+  },
+  {
+    "model": "core.servicecategory",
+    "pk": 2,
+    "fields": {
+      "name": "Photography",
+      "description": "Professional photography and videography services"
+    }
+  },
+  {
+    "model": "core.servicecategory",
+    "pk": 3,
+    "fields": {
+      "name": "Catering",
+      "description": "Food and beverage services for events"
+    }
+  },
+  {
+    "model": "core.servicecategory",
+    "pk": 4,
+    "fields": {
+      "name": "Printing & Design",
+      "description": "Custom printing and card design services"
+    }
+  },
+  {
+    "model": "core.storecategory",
+    "pk": 1,
+    "fields": {
+      "name": "Decor Items",
+      "description": "Beautiful decorative items for all occasions"
+    }
+  },
+  {
+    "model": "core.storecategory",
+    "pk": 2,
+    "fields": {
+      "name": "Event Accessories",
+      "description": "Essential accessories for event planning and decoration"
+    }
+  },
+  {
+    "model": "core.storecategory",
+    "pk": 3,
+    "fields": {
+      "name": "Lighting & Effects",
+      "description": "Lighting solutions and special effects for events"
+    }
+  },
+  {
+    "model": "core.storecategory",
+    "pk": 4,
+    "fields": {
+      "name": "Floral Supplies",
+      "description": "Flowers, plants, and floral arrangement supplies"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "title": "Premium Wedding Coordination Package",
+      "description": "Complete wedding planning and coordination with venue management, vendor coordination, and day-of execution. Includes pre-wedding consultations, timeline planning, and full event supervision.",
+      "price": "250000.00",
+      "image": "services/wedding_premium_coordination_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "title": "Corporate Event Management",
+      "description": "Professional corporate event planning for conferences, seminars, product launches, and team events. Includes venue selection, AV coordination, registration desk setup, and catering management.",
+      "price": "120000.00",
+      "image": "services/corporate_event_management_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "title": "Birthday Party Planning",
+      "description": "Fun and vibrant birthday party coordination for children and adults. Includes theme decoration, game arrangement, cake cutting setup, and entertainment coordination up to 100 guests.",
+      "price": "45000.00",
+      "image": "services/birthday_party_planning_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 4,
+    "fields": {
+      "category": 1,
+      "title": "Engagement & Mehendi Management",
+      "description": "Specialized pre-wedding event management for traditional Bengali ceremonies. Includes colorful decoration, music arrangement, guest accommodation coordination, and ceremony scheduling.",
+      "price": "85000.00",
+      "image": "services/mehendi_engagement_planning_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 5,
+    "fields": {
+      "category": 1,
+      "title": "Destination Wedding Planning",
+      "description": "Expert management for destination weddings with travel coordination, accommodation arrangements, local vendor partnerships, and comprehensive on-site supervision across multiple days.",
+      "price": "350000.00",
+      "image": "services/destination_wedding_planning_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 6,
+    "fields": {
+      "category": 1,
+      "title": "Walima Reception Coordination",
+      "description": "Post-wedding reception management with elegant decoration, guest coordination, ceremonial timing, and vendor management for up to 500 guests.",
+      "price": "95000.00",
+      "image": "services/walima_reception_coordination_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 7,
+    "fields": {
+      "category": 1,
+      "title": "Bridal Shower & Bachelorette Party",
+      "description": "Trendy and fun bridal shower and bachelorette party planning. Includes venue selection, game arrangement, decoration, and entertainment for intimate gatherings.",
+      "price": "35000.00",
+      "image": "services/bridal_shower_planning_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 8,
+    "fields": {
+      "category": 2,
+      "title": "Wedding Photography - 8 Hours",
+      "description": "Comprehensive wedding day photography covering pre-wedding, ceremony, and reception. Includes professional editing, online gallery, and 600+ high-resolution photos delivered on USB drive.",
+      "price": "45000.00",
+      "image": "services/wedding_photography_8hrs_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 9,
+    "fields": {
+      "category": 2,
+      "title": "Pre-Wedding Photoshoot - Premium",
+      "description": "Romantic pre-wedding photoshoot at multiple outdoor and indoor locations. Includes professional styling consultation, album creation with 250+ edited photos, and same-day preview slideshow.",
+      "price": "28000.00",
+      "image": "services/prewedding_photoshoot_premium_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 10,
+    "fields": {
+      "category": 2,
+      "title": "Birthday Photography Package",
+      "description": "Candid and posed birthday party photography capturing all special moments. Includes professional editing, digital copies, and optional same-day prints for guest memories.",
+      "price": "12000.00",
+      "image": "services/birthday_photography_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 11,
+    "fields": {
+      "category": 2,
+      "title": "Corporate Event Photography",
+      "description": "Professional photography for corporate events including conferences, seminars, award ceremonies, and team events. Features candid shots, group photos, and keynote coverage with editing included.",
+      "price": "18000.00",
+      "image": "services/corporate_photography_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 12,
+    "fields": {
+      "category": 2,
+      "title": "Mehendi & Haldi Photography",
+      "description": "Vibrant and colorful photography for pre-wedding traditional ceremonies. Captures the joy, dancing, and special moments with professional lighting and editing for authentic celebration memories.",
+      "price": "22000.00",
+      "image": "services/mehendi_haldi_photography_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 13,
+    "fields": {
+      "category": 2,
+      "title": "Wedding Videography - Full Day",
+      "description": "Professional wedding videography with cinematic editing, drone footage, and highlight reel. Deliverables include full-day edited video, cinematic trailer, and highlight compilation on professional video formats.",
+      "price": "65000.00",
+      "image": "services/wedding_videography_fullday_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 14,
+    "fields": {
+      "category": 2,
+      "title": "Maternity & Family Portrait Session",
+      "description": "Beautiful maternity and family portrait sessions in studio or outdoor settings. Includes professional styling consultation, hair and makeup touch-ups, and 100+ edited photos with print options.",
+      "price": "15000.00",
+      "image": "services/maternity_family_portrait_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 15,
+    "fields": {
+      "category": 2,
+      "title": "Drone Wedding Photography & Video",
+      "description": "Aerial photography and videography using professional drones for stunning overhead shots. Includes drone footage integration into wedding video and aerial album creation.",
+      "price": "35000.00",
+      "image": "services/drone_wedding_photography_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 16,
+    "fields": {
+      "category": 3,
+      "title": "Premium Bengali Wedding Catering",
+      "description": "Authentic Bengali cuisine with 18+ traditional dishes including pulao, korma, fish curry, lentils, vegetables, and desserts. Includes professional serving staff, table setup, and full bar service for up to 500 guests.",
+      "price": "850.00",
+      "image": "services/bengali_wedding_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 17,
+    "fields": {
+      "category": 3,
+      "title": "Continental Multi-Cuisine Buffet",
+      "description": "International cuisine selection including Indian, Chinese, Continental, and Middle Eastern options. Offers vegetarian and non-vegetarian varieties, dietary accommodations, and professional service staff.",
+      "price": "650.00",
+      "image": "services/continental_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 18,
+    "fields": {
+      "category": 3,
+      "title": "Biryani & Kebab Feast",
+      "description": "Traditional Mughlai biryani varieties (chicken, mutton, vegetarian) paired with assorted kebabs, raita, fresh salad, and traditional desserts. Perfect for wedding receptions and large celebrations.",
+      "price": "550.00",
+      "image": "services/biryani_kebab_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 19,
+    "fields": {
+      "category": 3,
+      "title": "Pure Vegetarian & Vegan Menu",
+      "description": "100% vegetarian and vegan cuisine with traditional and contemporary options. Features protein-rich dishes with lentils, paneer, tofu, seasonal vegetables, and exotic grains for health-conscious celebrations.",
+      "price": "480.00",
+      "image": "services/vegetarian_vegan_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 20,
+    "fields": {
+      "category": 3,
+      "title": "Gourmet Appetizers & Cocktail Hour",
+      "description": "Assorted finger foods including samosas, spring rolls, pakoras, cheese platters, pastries, and modern fusion appetizers. Ideal for cocktail receptions, networking events, and intimate gatherings.",
+      "price": "250.00",
+      "image": "services/appetizers_cocktail_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 21,
+    "fields": {
+      "category": 3,
+      "title": "Customized Cake & Dessert Catering",
+      "description": "Bespoke custom cakes, pastries, macarons, ice cream, and sweet treats. Includes consultation on flavors and designs, elegant plating, and serving staff for sophisticated dessert experiences.",
+      "price": "400.00",
+      "image": "services/custom_dessert_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 22,
+    "fields": {
+      "category": 3,
+      "title": "Chinese Cuisine Buffet Service",
+      "description": "Authentic Chinese food prepared fresh with noodles, fried rice, soups, and gravies cooked to order. Features chicken, beef, seafood, and vegetable options with professional serving and table management.",
+      "price": "520.00",
+      "image": "services/chinese_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 23,
+    "fields": {
+      "category": 3,
+      "title": "BBQ & Grilled Specialties",
+      "description": "Live grilled specialties including tandoori chicken, seekh kebabs, tikkas, and BBQ items cooked fresh on-site. Ideal for outdoor events with interactive cooking experience and customizable meat selections.",
+      "price": "600.00",
+      "image": "services/bbq_grilled_catering_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 24,
+    "fields": {
+      "category": 4,
+      "title": "Premium Wedding Card Printing",
+      "description": "Customized wedding invitation cards on premium cardstock with embossing, foiling, and specialty finishes. Includes free design consultation, sample approval process, and express delivery options.",
+      "price": "50.00",
+      "image": "services/premium_wedding_cards_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 25,
+    "fields": {
+      "category": 4,
+      "title": "Business Card Printing Service",
+      "description": "Professional business cards with your company logo, contact details, and branding. Options include matte, glossy, or textured finishes with variable data printing available for personalization.",
+      "price": "3.00",
+      "image": "services/business_card_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 26,
+    "fields": {
+      "category": 4,
+      "title": "Large Format Banner & Flex Printing",
+      "description": "High-quality banner printing for events, promotions, and celebrations in various sizes. Includes custom design services, vinyl flex material, and installation assistance available.",
+      "price": "25.00",
+      "image": "services/banner_flex_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 27,
+    "fields": {
+      "category": 4,
+      "title": "Elegant Menu Card Design & Printing",
+      "description": "Custom-designed menu cards for formal dinners and receptions with your signature design. Premium paper selection with professional typesetting and layout design included.",
+      "price": "15.00",
+      "image": "services/menu_card_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 28,
+    "fields": {
+      "category": 4,
+      "title": "Name Tag & Badge Customization",
+      "description": "Custom name tags and badges for corporate events with full-color printing and personalization. Includes lanyards and safety pin options for professional event identification.",
+      "price": "5.00",
+      "image": "services/name_tag_badge_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 29,
+    "fields": {
+      "category": 4,
+      "title": "Brochure & Marketing Material Printing",
+      "description": "Professional tri-fold brochures and marketing materials with full-color printing, lamination, and binding options. Perfect for product launches and business promotions.",
+      "price": "8.00",
+      "image": "services/brochure_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 30,
+    "fields": {
+      "category": 4,
+      "title": "Envelope & Letterhead Printing",
+      "description": "Custom-designed envelopes and letterheads for professional business communication. Includes watermark options and premium paper selection for executive correspondence.",
+      "price": "4.00",
+      "image": "services/envelope_letterhead_printing_01.jpg",
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Crystal Glass Table Centerpiece with LED Base",
+      "description": "Elegant crystal glass centerpiece with rechargeable LED light base in warm white. Ideal for wedding receptions, formal dinners, and upscale events. Reusable and durable.",
+      "price": "2500.00",
+      "image": "store/crystal_centerpiece_led_01.jpg",
+      "stock": 25,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Gold Charger Plates - Set of 6",
+      "description": "Premium gold-plated charger plates with elegant beaded edge design. Dishwasher safe and adds sophistication to any dining table. Perfect for formal event settings.",
+      "price": "3500.00",
+      "image": "store/gold_charger_plates_01.jpg",
+      "stock": 15,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "name": "Linen Table Runner with Beadwork - Gold",
+      "description": "Elegant linen table runner in gold with intricate beadwork along the edges. Adds luxury and sophistication to wedding receptions and formal dinners.",
+      "price": "1200.00",
+      "image": "store/gold_table_runner_beads_01.jpg",
+      "stock": 45,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 4,
+    "fields": {
+      "category": 1,
+      "name": "Silk Artificial Flower Bunch - Roses Mix",
+      "description": "High-quality silk artificial flowers in mixed rose arrangements. Durable, long-lasting, and reusable for multiple events. Available in various color combinations.",
+      "price": "2200.00",
+      "image": "store/silk_flowers_roses_mix_01.jpg",
+      "stock": 60,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 5,
+    "fields": {
+      "category": 1,
+      "name": "Fresh Red Roses Bundle - 50 Stems",
+      "description": "Fresh-cut red roses in premium quality bundles. Perfect for bouquets, centerpieces, and special occasions. Same-day delivery available in Dhaka.",
+      "price": "3500.00",
+      "image": "store/fresh_red_roses_50_01.jpg",
+      "stock": 35,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 6,
+    "fields": {
+      "category": 1,
+      "name": "Marigold Garland - 5 Meters",
+      "description": "Traditional marigold garland perfect for Indian and South Asian event decorations. Vibrant yellow color adds festive charm to entrances and backdrops.",
+      "price": "950.00",
+      "image": "store/marigold_garland_5m_01.jpg",
+      "stock": 50,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 7,
+    "fields": {
+      "category": 1,
+      "name": "Floral Foam & Oasis Blocks - Pack of 10",
+      "description": "High-quality floral foam for arranging fresh and artificial flowers. Essential for florists and event decorators. Pack includes 10 standard floral foam blocks.",
+      "price": "800.00",
+      "image": "store/floral_foam_blocks_10pk_01.jpg",
+      "stock": 100,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 8,
+    "fields": {
+      "category": 1,
+      "name": "Three-Tier Crystal Cake Stand",
+      "description": "Elegant three-tier crystal cake stand for displaying desserts and cupcakes. Perfect for wedding receptions and formal celebrations. Durable and beautiful.",
+      "price": "2900.00",
+      "image": "store/crystal_cake_stand_3tier_01.jpg",
+      "stock": 22,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 9,
+    "fields": {
+      "category": 2,
+      "name": "Metallic Balloons - 100 Pack Assorted",
+      "description": "Assorted metallic balloons in gold, silver, and rose gold. Perfect for all celebrations and easy to inflate. Pack of 100 with various sizes included.",
+      "price": "1500.00",
+      "image": "store/metallic_balloons_100pk_01.jpg",
+      "stock": 80,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 10,
+    "fields": {
+      "category": 2,
+      "name": "Wooden Photo Booth Props - Set of 15",
+      "description": "Vintage-style wooden photo booth props with stick handles. Includes signs, frames, and fun props for entertaining photo sessions at weddings and celebrations.",
+      "price": "2800.00",
+      "image": "store/photobooth_props_wooden_15pc_01.jpg",
+      "stock": 12,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 11,
+    "fields": {
+      "category": 2,
+      "name": "Portable Backdrop Stand - Adjustable Height",
+      "description": "Adjustable aluminum backdrop stand suitable for photography and events. Lightweight and portable with smooth height adjustment mechanism. Supports standard backdrop fabric.",
+      "price": "4200.00",
+      "image": "store/backdrop_stand_adjustable_01.jpg",
+      "stock": 18,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 12,
+    "fields": {
+      "category": 2,
+      "name": "Decorative Gift Boxes - Assorted - 10 Pieces",
+      "description": "Assorted decorative gift boxes in various sizes and colors. Perfect for return gifts and party favors. Includes tissue paper for elegant presentation.",
+      "price": "1200.00",
+      "image": "store/gift_boxes_assorted_10pc_01.jpg",
+      "stock": 75,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 13,
+    "fields": {
+      "category": 2,
+      "name": "Tissue Paper Pom-Poms & Decorations - 20 Pack",
+      "description": "Colorful tissue paper pom-poms and hanging decorations for affordable festive decoration. Easy to assemble and decorate. Perfect for birthday parties and celebrations.",
+      "price": "800.00",
+      "image": "store/tissue_pom_poms_20pk_01.jpg",
+      "stock": 150,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 14,
+    "fields": {
+      "category": 2,
+      "name": "LED Neon Sign - 'Mr & Mrs' Wedding",
+      "description": "Custom LED neon-style sign perfect for wedding backdrops and engagement photos. Battery-operated with adjustable brightness. Creates stunning photo opportunities.",
+      "price": "3800.00",
+      "image": "store/neon_sign_mr_mrs_01.jpg",
+      "stock": 16,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 15,
+    "fields": {
+      "category": 3,
+      "name": "LED String Lights - Warm White - 10 Meters",
+      "description": "Energy-efficient warm white LED string lights with 40 bulbs, ideal for decoration and ambiance. 10-meter length covers large areas. Waterproof and durable design.",
+      "price": "1200.00",
+      "image": "store/led_string_lights_warm_10m_01.jpg",
+      "stock": 50,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 16,
+    "fields": {
+      "category": 3,
+      "name": "Fairy Lights with Remote Control - 20 Meters",
+      "description": "Copper wire fairy lights with 200 warm white LEDs and remote control for easy operation. Creates magical ambiance for weddings and celebrations. Adjustable brightness.",
+      "price": "1800.00",
+      "image": "store/fairy_lights_20m_remote_01.jpg",
+      "stock": 35,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 17,
+    "fields": {
+      "category": 3,
+      "name": "RGB Uplighter Stage Lights - 4 Pack",
+      "description": "Programmable RGB uplighter lights with remote control for professional stage and backdrop lighting. Creates vibrant colored lighting effects. 4-piece set for comprehensive coverage.",
+      "price": "8500.00",
+      "image": "store/rgb_uplighter_lights_4pk_01.jpg",
+      "stock": 20,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 18,
+    "fields": {
+      "category": 3,
+      "name": "Scented Pillar Candle Set - 6 Pieces",
+      "description": "Luxury scented candles in assorted fragrances. Perfect for table decoration and creating ambient lighting. Set of 6 different scents for variety.",
+      "price": "1800.00",
+      "image": "store/scented_candles_6pc_01.jpg",
+      "stock": 40,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 19,
+    "fields": {
+      "category": 4,
+      "name": "Floral Tape & Wire Bundle",
+      "description": "Green floral tape and assorted gauge floral wires for flower arrangement and DIY decoration. Essential supplies for florists and event decorators.",
+      "price": "450.00",
+      "image": "store/floral_tape_wire_bundle_01.jpg",
+      "stock": 120,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 20,
+    "fields": {
+      "category": 4,
+      "name": "Mixed Color Carnation Bouquet - Fresh",
+      "description": "Fresh-cut carnation bouquets in mixed vibrant colors. Long-lasting flowers perfect for table centerpieces and gifts. Delivered fresh within 24 hours.",
+      "price": "1500.00",
+      "image": "store/carnation_bouquet_mixed_01.jpg",
+      "stock": 40,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.storeitem",
+    "pk": 21,
+    "fields": {
+      "category": 4,
+      "name": "White Jasmine Garland - 2 Meters",
+      "description": "Fragrant white jasmine garland perfect for traditional ceremonies and intimate events. Fresh and fragrant with natural white flowers. Limited quantity with advance order.",
+      "price": "800.00",
+      "image": "store/jasmine_garland_2m_01.jpg",
+      "stock": 25,
+      "created_at": "2025-12-07T10:00:00Z",
+      "updated_at": "2025-12-07T10:00:00Z"
+    }
+  }
+]

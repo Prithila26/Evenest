@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+
+{% block title %}Search Results - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 style="margin-bottom: var(--spacing-lg);">
+            Search Results {% if query %}for "{{ query }}"{% endif %}
+        </h1>
+        
+        {% if not services and not store_items %}
+        <div class="card" style="text-align: center; padding: var(--spacing-3xl);">
+            <i class="bi bi-search" style="font-size: 4rem; color: var(--text-tertiary); margin-bottom: var(--spacing-lg);"></i>
+            <h3 style="margin-bottom: var(--spacing-md);">No Results Found</h3>
+            <p style="color: var(--text-secondary); margin-bottom: var(--spacing-xl);">
+                {% if query %}
+                We couldn't find anything matching "{{ query }}". Try different keywords.
+                {% else %}
+                Enter a search term to find services and products.
+                {% endif %}
+            </p>
+            <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'all_services' %}" class="btn btn-primary">
+                    <i class="bi bi-briefcase"></i> Browse Services
+                </a>
+                <a href="{% url 'all_store_items' %}" class="btn btn-ghost">
+                    <i class="bi bi-shop"></i> Visit Store
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if services %}
+        <div style="margin-bottom: var(--spacing-3xl);">
+            <h2 style="margin-bottom: var(--spacing-xl); display: flex; align-items: center; gap: var(--spacing-md);">
+                <i class="bi bi-briefcase" style="color: var(--primary);"></i>
+                Services
+                <span style="font-size: 1rem; color: var(--text-tertiary); font-weight: normal;">
+                    ({{ services.count }} results)
+                </span>
+            </h2>
+            <div class="grid grid-3">
+                {% for service in services %}
+                <div class="service-card">
+                    <div class="card-image-container">
+                        {% if service.image %}
+                        <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                        {% else %}
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="bi bi-image" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ service.title }}</h3>
+                        <p class="card-description">{{ service.description|truncatewords:15 }}</p>
+                        <div class="card-meta">
+                            <div class="card-meta-item">
+                                <i class="bi bi-tag"></i>
+                                {{ service.category.name }}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">৳{{ service.price|floatformat:0 }}</div>
+                            <a href="{% url 'service_detail' service.id %}" class="btn btn-primary btn-small">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if store_items %}
+        <div>
+            <h2 style="margin-bottom: var(--spacing-xl); display: flex; align-items: center; gap: var(--spacing-md);">
+                <i class="bi bi-shop" style="color: var(--primary);"></i>
+                Store Products
+                <span style="font-size: 1rem; color: var(--text-tertiary); font-weight: normal;">
+                    ({{ store_items.count }} results)
+                </span>
+            </h2>
+            <div class="grid grid-3">
+                {% for item in store_items %}
+                <div class="product-card">
+                    <div class="card-image-container">
+                        {% if item.image %}
+                        <img src="{{ item.image|smart_image_url }}" alt="{{ item.name }}">
+                        {% else %}
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="bi bi-image" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: var(--spacing-sm);">
+                            {{ item.category.name }}
+                        </p>
+                        <h3 class="card-title">{{ item.name }}</h3>
+                        <p class="card-description">{{ item.description|truncatewords:15 }}</p>
+                        <div class="flex" style="gap: var(--spacing-sm); color: var(--success); font-size: 0.9rem; margin: var(--spacing-md) 0;">
+                            {% if item.stock > 0 %}
+                                <i class="bi bi-check-circle"></i>
+                                <span>{{ item.stock }} in stock</span>
+                            {% else %}
+                                <i class="bi bi-exclamation-circle" style="color: var(--warning);"></i>
+                                <span style="color: var(--warning);">Out of stock</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">৳{{ item.price|floatformat:0 }}</div>
+                            <a href="{% url 'store_item_detail' item.id %}" class="btn btn-primary btn-small">
+                                View
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

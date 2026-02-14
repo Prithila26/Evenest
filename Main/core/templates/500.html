@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}500 - Server Error{% endblock %}
+
+{% block content %}
+<section class="section" style="display: flex; align-items: center; justify-content: center; min-height: 500px;">
+    <div style="text-align: center;">
+        <h1 style="font-size: 4rem; color: var(--error); margin-bottom: var(--spacing-lg);">500</h1>
+        <h2 style="margin-bottom: var(--spacing-md);">Server Error</h2>
+        <p style="color: var(--text-secondary); margin-bottom: var(--spacing-2xl);">Something went wrong on our end. We're working to fix it!</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            <i class="bi bi-house"></i> Go Home
+        </a>
+    </div>
+</section>
+{% endblock %}

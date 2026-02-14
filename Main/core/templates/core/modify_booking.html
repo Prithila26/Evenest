@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Modify Booking - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 600px;">
+        <div class="card">
+            <h2 style="margin-bottom: var(--spacing-xl);">
+                <i class="bi bi-pencil-square"></i> Modify Booking #{{ booking.id }}
+            </h2>
+            
+            {% with service=booking.get_service %}
+            <div style="background: var(--bg-tertiary); padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-xl);">
+                <p style="margin-bottom: var(--spacing-sm);"><strong>Service:</strong> {% if service %}{{ service.title }}{% else %}{{ booking.get_service_type_display }}{% endif %}</p>
+                <p style="margin-bottom: var(--spacing-sm);"><strong>Current Date:</strong> {{ booking.date|date:"F d, Y" }}</p>
+                <p><strong>Current Time:</strong> {{ booking.time_slot|time:"g:i A" }}</p>
+            </div>
+            {% endwith %}
+            
+            <form method="post" action="{% url 'modify_booking' booking.id %}">
+                {% csrf_token %}
+                
+                <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+                    <label for="date" style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600;">New Date</label>
+                    <input type="date" id="date" name="date" class="form-control" value="{{ booking.date|date:'Y-m-d' }}" style="width: 100%; padding: var(--spacing-md); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+                    <label for="time_slot" style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600;">New Time</label>
+                    <input type="time" id="time_slot" name="time_slot" class="form-control" value="{{ booking.time_slot|time:'H:i' }}" style="width: 100%; padding: var(--spacing-md); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: var(--spacing-xl);">
+                    <label for="requirements" style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600;">Additional Requirements</label>
+                    <textarea id="requirements" name="requirements" class="form-control" rows="4" style="width: 100%; padding: var(--spacing-md); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary); resize: vertical;">{{ booking.requirements }}</textarea>
+                </div>
+                
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="bi bi-check-lg"></i> Save Changes
+                    </button>
+                    <a href="{% url 'my_bookings' %}" class="btn btn-ghost" style="flex: 1; text-align: center;">
+                        <i class="bi bi-x-lg"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

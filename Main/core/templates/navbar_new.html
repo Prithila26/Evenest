@@ -1,0 +1,296 @@
+{% load static %}
+{% load cart_tags %}
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="bi bi-calendar-event me-2"></i>
+            EvenNest
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-house me-1"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-grid me-1"></i>
+                        Services
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in service_categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'all_services' %}?category={{ category.id }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-shop me-1"></i>
+                        Store
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in store_categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'all_store_items' %}?category={{ category.id }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <form class="d-flex me-3" action="{% url 'search' %}" method="GET">
+                    <input type="search" 
+                           name="q" 
+                           class="form-control me-2" 
+                           placeholder="Search..."
+                           aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'cart_detail' %}" class="btn btn-outline-light me-2 cart-btn position-relative">
+                        <i class="bi bi-cart3"></i>
+                        {% with cart_count=cart_item_count %}
+                        {% if cart_count > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge-animated">
+                            {{ cart_count }}
+                        </span>
+                        {% endif %}
+                        {% endwith %}
+                    </a>
+                    <a href="{% url 'wishlist' %}" class="btn btn-outline-light me-2">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i>
+                            {{ user.username }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if user.is_staff %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                    <i class="bi bi-gear me-2"></i>
+                                    Admin
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'profile' %}">
+                                    <i class="bi bi-person me-2"></i>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'booking_list' %}">
+                                    <i class="bi bi-calendar-check me-2"></i>
+                                    My Bookings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'order_history' %}">
+                                    <i class="bi bi-clock-history me-2"></i>
+                                    Orders
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-box-arrow-right me-2"></i>
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
+                    <a href="{% url 'signup' %}" class="btn btn-light">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+.custom-navbar {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md) 0;
+}
+
+.custom-navbar .navbar-brand {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white) !important;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-base);
+}
+
+.custom-navbar .navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+.custom-navbar .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-base);
+}
+
+.custom-navbar .nav-link:hover {
+    color: var(--color-white) !important;
+    transform: translateY(-2px);
+}
+
+.custom-navbar .dropdown-menu {
+    border: none;
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    padding: var(--spacing-sm) 0;
+}
+
+.custom-navbar .dropdown-item {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-normal);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-base);
+}
+
+.custom-navbar .dropdown-item:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding-left: calc(var(--spacing-lg) + var(--spacing-xs));
+}
+
+.custom-navbar .btn-outline-light {
+    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.95) !important;
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all var(--transition-base);
+}
+
+.custom-navbar .btn-outline-light:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.8);
+    color: var(--color-white) !important;
+    transform: translateY(-2px);
+}
+
+.custom-navbar .btn-light {
+    background: rgba(255,255,255,0.9);
+    border: none;
+    color: var(--color-primary) !important;
+    font-weight: var(--font-weight-semibold);
+    transition: all var(--transition-base);
+}
+
+.custom-navbar .btn-light:hover {
+    background: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.custom-navbar .form-control {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+}
+
+.custom-navbar .form-control::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.custom-navbar .form-control:focus {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.6);
+    color: var(--color-white);
+    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.25);
+}
+
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.5);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.cart-btn {
+    position: relative;
+}
+
+.cart-btn .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: var(--font-size-xs);
+}
+
+@media (max-width: 991px) {
+    .custom-navbar {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .custom-navbar .navbar-nav {
+        margin-top: var(--spacing-md);
+    }
+    
+    .custom-navbar .nav-link {
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .custom-navbar .dropdown-menu {
+        background: rgba(255,255,255,0.1);
+    }
+    
+    .custom-navbar .dropdown-item {
+        color: rgba(255,255,255,0.9);
+    }
+    
+    .custom-navbar .dropdown-item:hover {
+        background: rgba(255,255,255,0.2);
+    }
+    
+    .d-flex {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+</style>

@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.title }} - EventNest{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="flex" style="gap: var(--spacing-2xl); margin-bottom: var(--spacing-3xl);">
+            <!-- Image -->
+            <div style="flex: 1; min-width: 0;">
+                {% if service.image %}
+                <img src="{{ service.image.url }}" alt="{{ service.title }}" style="width: 100%; border-radius: var(--radius-xl); object-fit: cover; height: 400px;">
+                {% else %}
+                <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; color: white;">
+                    <div style="text-align: center;">
+                        <i class="bi bi-image" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
+                        <p>{{ service.title }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Details -->
+            <div style="flex: 1;">
+                <div class="card-badge">{{ service.category.name }}</div>
+                <h1 style="margin-top: var(--spacing-md);">{{ service.title }}</h1>
+                
+                <div class="flex" style="gap: var(--spacing-lg); margin: var(--spacing-xl) 0; align-items: center;">
+                    <div>
+                        <div style="font-size: 2rem; color: var(--primary); font-weight: 700;">৳{{ service.price|floatformat:0 }}</div>
+                        <p style="color: var(--text-tertiary);">Starting from</p>
+                    </div>
+                    <div style="border-left: 2px solid var(--bg-tertiary); padding-left: var(--spacing-lg);">
+                        <div class="flex" style="gap: var(--spacing-sm); align-items: center;">
+                            <i class="bi bi-star-fill" style="color: var(--warning); font-size: 1.2rem;"></i>
+                            <span style="font-weight: 600;">4.8 out of 5</span>
+                        </div>
+                        <p style="color: var(--text-tertiary); font-size: 0.9rem;">Based on 120+ reviews</p>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-secondary); padding: var(--spacing-lg); border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);">
+                    <h4 style="margin-bottom: var(--spacing-md);">What's Included:</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                        <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-sm);"></i>Professional team</li>
+                        <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-sm);"></i>Full support</li>
+                        <li><i class="bi bi-check-circle-fill" style="color: var(--success); margin-right: var(--spacing-sm);"></i>Premium quality</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'contact' %}" class="btn btn-primary" style="width: 100%; justify-content: center; padding: var(--spacing-lg); margin-bottom: var(--spacing-md);">
+                    <i class="bi bi-chat-dots"></i> Request a Quote
+                </a>
+                <button onclick="openBookingModal()" class="btn btn-success" style="width: 100%; justify-content: center; padding: var(--spacing-lg);">
+                    <i class="bi bi-calendar-check"></i> Book This Service
+                </button>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="card">
+            <h3>About This Service</h3>
+            <p>{{ service.description }}</p>
+            
+            <h4 style="margin-top: var(--spacing-xl);">Key Features</h4>
+            <div class="grid grid-2">
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-check"></i> Quality Assured
+                    </h5>
+                    <p>All our services meet the highest industry standards.</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-check"></i> Customizable
+                    </h5>
+                    <p>Packages can be tailored to your specific needs.</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-check"></i> On-Time Delivery
+                    </h5>
+                    <p>We guarantee punctual and reliable service delivery.</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: var(--spacing-sm);">
+                        <i class="bi bi-check"></i> Expert Team
+                    </h5>
+                    <p>Experienced professionals dedicated to your success.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="card" style="margin-top: var(--spacing-2xl);">
+            <h3>Customer Reviews</h3>
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-xl); margin-top: var(--spacing-xl);">
+                <div style="padding: var(--spacing-lg); background: var(--bg-secondary); border-radius: var(--radius-lg);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--spacing-md);">
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: var(--spacing-xs);">John Doe</p>
+                            <div style="display: flex; gap: var(--spacing-xs);">
+                                {% for i in "12345" %}
+                                <i class="bi bi-star-fill" style="color: var(--warning);"></i>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">2 weeks ago</p>
+                    </div>
+                    <p>"Absolutely fantastic service! Would recommend to anyone."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Book {{ service.title }}</h2>
+            <button class="modal-close" onclick="closeBookingModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+        </div>
+        
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'request_quote' service.id %}" style="padding: var(--spacing-xl);">
+            {% csrf_token %}
+            <input type="hidden" name="service_id" value="{{ service.id }}">
+            
+            <div class="form-group">
+                <label for="eventDate" style="font-weight: 600; display: block; margin-bottom: var(--spacing-sm);">
+                    <i class="bi bi-calendar-event"></i> Event Date
+                </label>
+                <input type="date" id="eventDate" name="date" required style="width: 100%; padding: var(--spacing-md); border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary);">
+                <p style="font-size: 0.85rem; color: var(--text-tertiary); margin-top: var(--spacing-xs);">Choose the date for your event</p>
+            </div>
+
+            <div class="form-group">
+                <label for="eventTime" style="font-weight: 600; display: block; margin-bottom: var(--spacing-sm);">
+                    <i class="bi bi-clock"></i> Preferred Time
+                </label>
+                <input type="time" id="eventTime" name="time" required style="width: 100%; padding: var(--spacing-md); border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary);">
+                <p style="font-size: 0.85rem; color: var(--text-tertiary); margin-top: var(--spacing-xs);">Select your preferred time slot</p>
+            </div>
+
+            <div class="form-group">
+                <label for="guestCount" style="font-weight: 600; display: block; margin-bottom: var(--spacing-sm);">
+                    <i class="bi bi-people"></i> Number of Guests (if applicable)
+                </label>
+                <input type="number" id="guestCount" name="guests" min="1" max="500" placeholder="e.g., 50" style="width: 100%; padding: var(--spacing-md); border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary);">
+            </div>
+
+            <div class="form-group">
+                <label for="requirements" style="font-weight: 600; display: block; margin-bottom: var(--spacing-sm);">
+                    <i class="bi bi-chat-left-text"></i> Additional Requirements
+                </label>
+                <textarea id="requirements" name="requirements" rows="4" placeholder="Tell us about any special requirements or preferences..." style="width: 100%; padding: var(--spacing-md); border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary); font-family: inherit;"></textarea>
+            </div>
+
+            <div class="form-group" style="background: var(--bg-secondary); padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+                    <p style="color: var(--text-tertiary);">Service Price</p>
+                    <p style="font-weight: 700; font-size: 1.2rem; color: var(--primary);">৳{{ service.price|floatformat:0 }}</p>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-tertiary);">Final price may vary based on requirements</p>
+            </div>
+
+            <div style="display: flex; gap: var(--spacing-md);">
+                <button type="submit" class="btn btn-success" style="flex: 1; justify-content: center; padding: var(--spacing-lg);">
+                    <i class="bi bi-check-circle"></i> Confirm Booking
+                </button>
+                <button type="button" onclick="closeBookingModal()" class="btn btn-ghost" style="flex: 1; justify-content: center; padding: var(--spacing-lg);">
+                    Cancel
+                </button>
+            </div>
+        </form>
+        {% else %}
+        <div style="padding: var(--spacing-xl); text-align: center;">
+            <i class="bi bi-lock" style="font-size: 3rem; color: var(--text-tertiary); display: block; margin-bottom: var(--spacing-lg);"></i>
+            <h3>Login Required</h3>
+            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-xl);">You need to be logged in to book this service.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary" style="justify-content: center; padding: var(--spacing-lg); margin-bottom: var(--spacing-md);">
+                <i class="bi bi-box-arrow-in-right"></i> Sign In
+            </a>
+            <p style="color: var(--text-tertiary);">Don't have an account? <a href="{% url 'signup' %}" style="color: var(--primary); font-weight: 600;">Sign up here</a></p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-content {
+        background: var(--bg-primary);
+        border-radius: var(--radius-xl);
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.3s ease;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--spacing-xl);
+        border-bottom: 2px solid var(--bg-tertiary);
+        position: sticky;
+        top: 0;
+        background: var(--bg-primary);
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+
+    .btn-success {
+        background-color: #10B981;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #059669;
+    }
+
+    input::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: invert(0.7);
+    }
+</style>
+
+<script>
+    function openBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('bookingModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeBookingModal();
+        }
+    });
+
+    // Set minimum date to today
+    document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+</script>
+{% endblock %}
