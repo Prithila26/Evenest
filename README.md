@@ -1,10 +1,10 @@
-# EventNest
+# Evenest
 
 A comprehensive, production-ready event management platform combining a professional services marketplace with an e-commerce store for event-related products.
 
 ## Overview
 
-EventNest enables users to discover and book professional event services (planning, photography, catering, entertainment, etc.) while shopping for event supplies, packages, and merchandise. It's a complete platform built with Django featuring a modern dark-themed interface, secure authentication, and robust booking/order management.
+Evenest enables users to discover and book professional event services (planning, photography, catering, entertainment, etc.) while shopping for event supplies, packages, and merchandise. It's a complete platform built with Django featuring a modern dark-themed interface, secure authentication, and robust booking/order management.
 
 ## Features
 
@@ -70,7 +70,7 @@ EventNest enables users to discover and book professional event services (planni
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Prithila26/Evenest.git
-   cd EventNest
+   cd Evenest
    ```
 
 2. **Create and activate virtual environment:**
@@ -106,7 +106,7 @@ EventNest enables users to discover and book professional event services (planni
 ## Project Structure
 
 ```
-EventNest/
+Evenest/
 ├── Main/
 │   ├── core/                      # Main Django application
 │   │   ├── models.py             # 13+ database models
@@ -179,7 +179,7 @@ EventNest/
 
 ## Deployment
 
-EventNest is production-ready and can be deployed on:
+Evenest is production-ready and can be deployed on:
 
 - **Railway** (Recommended) - Simple, reliable deployment
 - **Heroku** - Platform-as-a-Service option
@@ -208,7 +208,7 @@ Refer to [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed deployment in
 ## Support & Contributing
 
 For issues, feature requests, or contributions, please visit:
-https://github.com/Prohar04/EventNest
+https://github.com/Prohar04/Evenest
 
 ## License
 
@@ -216,8 +216,9 @@ This project is provided as-is for educational and commercial use. See the repos
 
 ## About
 
-EventNest is a production-ready platform developed with Django, engineered for scalability, security, and user experience. It provides a complete solution for event service booking and product sales in one integrated platform.
+Evenest is a production-ready platform developed with Django, engineered for scalability, security, and user experience. It provides a complete solution for event service booking and product sales in one integrated platform.
 
 **Version**: 1.0.0
 **Last Updated**: December 2025
 **Status**: ✅ Production Ready
+
