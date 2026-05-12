@@ -208,7 +208,7 @@ Refer to [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed deployment in
 ## Support & Contributing
 
 For issues, feature requests, or contributions, please visit:
-https://github.com/Prohar04/Evenest
+https://github.com/Prithila26/Evenest
 
 ## License
 
